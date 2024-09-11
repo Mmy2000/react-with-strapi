@@ -14,7 +14,7 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Link } from 'react-router-dom';
 
 
-export default function ProductCard() {
+export default function ProductCard({attributes}) {
   return (
     <>
                 <Card
@@ -29,7 +29,7 @@ export default function ProductCard() {
           >
             <CardBody p={6}>
               <Image
-                src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                src=""
                 alt="Green double couch with wooden legs"
                 boxSize="220px"
                 borderRadius="full"
@@ -40,15 +40,13 @@ export default function ProductCard() {
               />
               <Stack spacing={4} textAlign="center">
                 <Heading size="lg" color="gray.800" fontWeight="semibold">
-                  Living Room Sofa
+                  {attributes.title}
                 </Heading>
                 <Text fontSize="sm" color="gray.600" px={4} lineHeight="1.8">
-                  A chic, modern tropical sofa perfect for baroque-inspired
-                  spaces. Its vintage design adds a touch of elegance to any
-                  room.
+                  {attributes.description}
                 </Text>
                 <Text color="blue.500" fontSize="2xl" fontWeight="bold">
-                  $450
+                  ${attributes.price}
                 </Text>
                 <Button
                 as={Link}
