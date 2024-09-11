@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
+import ProductDetailSceleton from '../components/ProductDetailSceleton';
 
 
 export default function Product() {
@@ -36,6 +37,18 @@ export default function Product() {
     useEffect(() => {
         document.title = `Product Store | product ${id} page`
     }, []);
+    if (isLoading) {
+        return (
+          <Box
+            direction="column"
+            align="center"
+            justify="center"
+            m={20}
+          >
+            <ProductDetailSceleton />
+          </Box>
+        );
+    }
   return (
     <Box maxW="7xl" mx="auto" px={{ base: 4, md: 8 }} py={{ base: 8, md: 16 }}>
       <Flex direction={{ base: "column", md: "row" }} gap={12}>
