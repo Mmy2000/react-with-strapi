@@ -1,11 +1,17 @@
 import React from 'react'
 import ProductCard from '../components/productCard'
-import { Box } from '@chakra-ui/react'
+import { Box , Grid } from '@chakra-ui/react'
 
 export default function Products() {
   return (
-    <Box margin={10}>
-        <ProductCard/>
-    </Box>
-  )
+    <Grid m={10} templateColumns={"repeat(auto-fill,minmax(300px,1fr))"} gap={5}>
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+    </Grid>
+  );
 }

@@ -17,10 +17,9 @@ import { Link } from 'react-router-dom';
 export default function ProductCard() {
   return (
     <>
-      
-        
-          <Card
+                <Card
             maxW="sm"
+            mx={'auto'}
             bg="white"
             boxShadow="2xl"
             borderRadius="xl"
