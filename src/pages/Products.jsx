@@ -8,8 +8,14 @@ export default function Products() {
 
   const [product, setProduct] = useState([]);
   useEffect(() => {
-    axios.get(`http://localhost:1337/api/products`).then( response => setProduct(response.data.data)).catch(err => console.log(err)
-    );
+    axios
+      .get(
+        `${
+          import.meta.env.VITE_SERVER_URL
+        }/api/products?populate=thumbnail,categories`
+      )
+      .then((response) => setProduct(response.data.data))
+      .catch((err) => console.log(err));
   }, []);
   
   return (
