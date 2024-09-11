@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -13,7 +13,8 @@ import {
   Button,
   useColorModeValue,
   VStack,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
+
 
 export default function Product() {
     const { id, category } = useParams();
@@ -36,69 +37,69 @@ export default function Product() {
         document.title = `Product Store | product ${id} page`
     }, []);
   return (
-    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 8 }} py={{ base: 6, md: 12 }}>
-      <Flex direction={{ base: "column", md: "row" }} gap={8}>
+    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 8 }} py={{ base: 8, md: 16 }}>
+      <Flex direction={{ base: "column", md: "row" }} gap={12}>
         {/* Product Image */}
-        <Image
-          rounded="lg"
-          w={{ base: "100%", md: "50%" }}
-          h={{ base: "auto", md: "400px" }}
-          src={`${import.meta.env.VITE_SERVER_URL}${
-            data?.data?.attributes?.thumbnail?.data?.attributes?.url
-          }`}
-          objectFit="cover"
-        />
+        <Box flex="1">
+          <Image
+            rounded="lg"
+            w="100%"
+            h={{ base: "auto", md: "450px" }}
+            src={`${import.meta.env.VITE_SERVER_URL}${
+              data?.data?.attributes?.thumbnail?.data?.attributes?.url
+            }`}
+            objectFit="cover"
+            boxShadow="lg"
+          />
+        </Box>
 
         {/* Product Details */}
-        <VStack align="flex-start" spacing={4} w="full">
-          <Heading fontSize="2xl">{data?.data?.attributes?.title}</Heading>
-          <Badge colorScheme="green"></Badge>
-          <Text color={useColorModeValue("gray.600", "gray.400")}>
+        <VStack align="flex-start" spacing={6} w="full" flex="1">
+          <Heading as="h1" size="xl" fontWeight="bold">
+            {data?.data?.attributes?.title}
+          </Heading>
+          <Text fontSize="lg" color={useColorModeValue("gray.600", "gray.400")}>
             {data?.data?.attributes?.description}
           </Text>
-          <Text fontSize="2xl" fontWeight="bold">
-            ${data?.data?.attributes?.price.toFixed(2)}
-          </Text>
-          {data?.data?.attributes?.stock > 0 ? (
-            <Badge colorScheme="green">In Stock</Badge>
-          ) : (
-            <Badge colorScheme="red">Out of Stock</Badge>
-          )}
-          <Button colorScheme="blue" size="lg" w="full">
+          <Stack direction="row" align="center" spacing={4}>
+            <Text fontSize="2xl" fontWeight="bold">
+              ${data?.data?.attributes?.price.toFixed(2)}
+            </Text>
+            {data?.data?.attributes?.stock > 0 ? (
+              <Badge colorScheme="green" px={2} py={1} borderRadius="md">
+                In Stock
+              </Badge>
+            ) : (
+              <Badge colorScheme="red" px={2} py={1} borderRadius="md">
+                Out of Stock
+              </Badge>
+            )}
+          </Stack>
+          
+          <Button
+          w={'full'}
+            as={Link}
+            to={`/products`}
+            bgGradient="linear(to-r, cyan.400, blue.500)"
+            size="md"
+            color="white"
+            px={8}
+            borderRadius="full"
+            _hover={{
+              bgGradient: "linear(to-r, cyan.500, blue.600)",
+              transform: "translateY(-3px)",
+              boxShadow: "xl",
+            }}
+            _active={{
+              bgGradient: "linear(to-r, cyan.600, blue.700)",
+              transform: "translateY(0)",
+            }}
+            transition="all 0.3s ease"
+          >
             Add to Cart
           </Button>
         </VStack>
       </Flex>
     </Box>
-    // <Flex alignItems="center" justifyContent="center" mt={10}>
-    //   <Card maxW="sm" border="1px solid #e2e8f0" borderRadius="md">
-    //     <CardBody>
-    //       <Image
-    //         src={`${import.meta.env.VITE_SERVER_URL}${
-    //           data?.data?.attributes?.thumbnail?.data?.attributes?.url
-    //         }`}
-    //         alt="iPhone 9"
-    //         borderRadius="lg"
-    //       />
-    //       <Box mt={4}>
-    //         <Heading size="md">{data?.data?.attributes?.title}</Heading>
-    //         <Text mt={2} color="gray.600">
-    //           {data?.data?.attributes?.description}
-    //         </Text>
-    //         <Text mt={2} color="blue.500" fontWeight="bold">
-    //           {data?.data?.attributes?.categories?.data?.attributes?.title}
-    //         </Text>
-    //         <Text mt={2} fontSize="xl" fontWeight="bold">
-    //           ${data?.data?.attributes?.price}
-    //         </Text>
-    //       </Box>
-    //     </CardBody>
-    //     <CardFooter>
-    //       <Button colorScheme="purple" width="full">
-    //         ADD TO CART
-    //       </Button>
-    //     </CardFooter>
-    //   </Card>
-    // </Flex>
   );
 }
