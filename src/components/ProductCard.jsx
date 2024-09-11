@@ -14,11 +14,9 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Link } from 'react-router-dom';
 
 
-export default function ProductCard({attributes}) {
- console.log(import.meta.env.VITE_SERVER_URL);
+export default function ProductCard({attributes,id}) {
  
- 
-  
+
   return (
     <>
       <Card
@@ -56,7 +54,7 @@ export default function ProductCard({attributes}) {
             </Text>
             <Button
               as={Link}
-              to={`/products/1`}
+              to={`/products/${id}`}
               bgGradient="linear(to-r, cyan.400, blue.500)"
               size="md"
               color="white"

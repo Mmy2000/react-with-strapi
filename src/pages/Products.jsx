@@ -5,8 +5,8 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import Sceleton from '../components/Sceleton';
 
-
 export default function Products() {
+  
 
   const getProductList = async ()=>{
     const { data } = await axios.get(
@@ -18,6 +18,8 @@ export default function Products() {
   }
 
   const {isLoading , data , error} = useQuery('products', () => getProductList())
+  console.log(data?.data);
+  
   if (isLoading) {
     return <Grid
       m={10}
