@@ -3,6 +3,7 @@ import ProductCard from '../components/productCard'
 import { Box , Grid } from '@chakra-ui/react'
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import Sceleton from '../components/Sceleton';
 
 
 export default function Products() {
@@ -18,7 +19,15 @@ export default function Products() {
 
   const {isLoading , data , error} = useQuery('products', () => getProductList())
   if (isLoading) {
-    return <h3>loading ...</h3>
+    return <Grid
+      m={10}
+      templateColumns={"repeat(auto-fill,minmax(300px,1fr))"}
+      gap={5}
+    >
+      {Array.from({ length:20},(_,idx) => (
+        <Sceleton key={idx}/>
+      ))}
+    </Grid>
   }
   
   return (
