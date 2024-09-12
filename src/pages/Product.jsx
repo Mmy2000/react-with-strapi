@@ -53,7 +53,7 @@ export default function Product() {
         );
     }
   return (
-    <Box maxW="7xl" mt={'5'} mx="auto" px={{ base: 4, md: 8 }} py={{ base: 8, md: 16 }}>
+    <Box maxW="7xl"  mx="auto" px={{ base: 4, md: 8 }} py={{ base: 8, md: 16 }}>
       {/* Back Button */}
       <Button
         mb={4}
