@@ -35,6 +35,7 @@ export default function Products() {
   return (
     <Grid
       m={10}
+      
       templateColumns={"repeat(auto-fill,minmax(300px,1fr))"}
       gap={5}
     >

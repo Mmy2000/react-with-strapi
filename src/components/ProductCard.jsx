@@ -22,6 +22,7 @@ export default function ProductCard({attributes,id}) {
   return (
     <>
       <Card
+        mt={"20"}
         maxW="sm"
         mx={"auto"}
         bg="white"

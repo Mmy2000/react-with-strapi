@@ -5,8 +5,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <div className="text-3xl font-bold text-gray-800">BrandName</div>
 
@@ -94,7 +94,7 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white shadow-lg">
+        <div className="md:hidden bg-white shadow-lg absolute top-full left-0 w-full">
           <NavLink
             to="/"
             className={({ isActive }) =>
