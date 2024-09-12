@@ -1,7 +1,8 @@
-import React from 'react'
+import React from "react";
+import HeaderSlider from "../components/HeaderSlider";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div>Home Page</div>
-  )
+    <HeaderSlider/>
+  );
 }
