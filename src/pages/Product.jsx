@@ -15,6 +15,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import ProductDetailSceleton from '../components/ProductDetailSceleton';
+import { formatPrice } from '../utils/functions';
 
 
 export default function Product() {
@@ -76,7 +77,7 @@ export default function Product() {
           </Text>
           <Stack direction="row" align="center" spacing={4}>
             <Text fontSize="2xl" fontWeight="bold">
-              ${data?.data?.attributes?.price.toFixed(2)}
+              ${formatPrice(data?.data?.attributes?.price)}
             </Text>
             {data?.data?.attributes?.stock > 0 ? (
               <Badge colorScheme="green" px={2} py={1} borderRadius="md">
@@ -88,9 +89,9 @@ export default function Product() {
               </Badge>
             )}
           </Stack>
-          
+
           <Button
-          w={'full'}
+            w={"full"}
             as={Link}
             to={`/products`}
             bgGradient="linear(to-r, cyan.400, blue.500)"

@@ -12,6 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Link } from 'react-router-dom';
+import { formatPrice, textSlicer } from '../utils/functions';
+
 
 
 export default function ProductCard({attributes,id}) {
@@ -47,10 +49,10 @@ export default function ProductCard({attributes,id}) {
               {attributes.title}
             </Heading>
             <Text fontSize="sm" color="gray.600" px={4} lineHeight="1.8">
-              {attributes.description}
+              {textSlicer(attributes.description)}
             </Text>
             <Text color="blue.500" fontSize="2xl" fontWeight="bold">
-              ${attributes.price}
+              ${formatPrice(attributes.price)}
             </Text>
             <Button
               as={Link}
