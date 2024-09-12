@@ -9,6 +9,7 @@ import Products from './pages/Products'
 import Product from './pages/Product'
 import Layout from './pages/Layout'
 import { QueryClient, QueryClientProvider } from "react-query";
+import Contact from './pages/Contact'
 
 let router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ let router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },

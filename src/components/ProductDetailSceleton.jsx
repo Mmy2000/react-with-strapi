@@ -6,7 +6,7 @@ export default function ProductDetailSceleton() {
     <Box
       padding="5"
       boxShadow="lg"
-      bg="gray.400"
+      bg="gray.200"
       rounded="lg"
       maxW="7xl"
       mx="auto"

@@ -4,16 +4,18 @@ import { useQuery } from 'react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
-  Flex,
-  Image,
-  Heading,
-  Text,
-  Stack,
-  Badge,
   Button,
-  useColorModeValue,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
   VStack,
+  Badge,
+  useColorModeValue,
+  Icon,
 } from "@chakra-ui/react";
+import { FiArrowLeft } from "react-icons/fi"; // Importing the arrow icon
 import ProductDetailSceleton from '../components/ProductDetailSceleton';
 import { formatPrice } from '../utils/functions';
 
@@ -52,6 +54,22 @@ export default function Product() {
     }
   return (
     <Box maxW="7xl" mx="auto" px={{ base: 4, md: 8 }} py={{ base: 8, md: 16 }}>
+      {/* Back Button */}
+      <Button
+        mb={4}
+        leftIcon={<Icon as={FiArrowLeft} />}
+        bg="gray.200"
+        color="gray.800"
+        _hover={{ bg: "gray.300" }}
+        _active={{ bg: "gray.400" }}
+        onClick={goBack} // Navigate to the previous page
+        size="lg"
+        borderRadius="full"
+        shadow="md"
+      >
+        Back
+      </Button>
+
       <Flex direction={{ base: "column", md: "row" }} gap={12}>
         {/* Product Image */}
         <Box flex="1">
