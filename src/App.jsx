@@ -44,7 +44,7 @@ let router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/regsiter",
+        path: "/register",
         element: <Register />,
       },
       { path: "*", element: <Notfound /> },
