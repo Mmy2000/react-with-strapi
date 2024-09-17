@@ -21,19 +21,18 @@ import { formatPrice } from '../utils/functions';
 
 
 export default function Product() {
+  const textColor = useColorModeValue("gray.600", "gray.400");
     const { id } = useParams();
     const navigate = useNavigate()
     const getProductList = async () => {
       const { data } = await axios.get(
         `${
           import.meta.env.VITE_SERVER_URL
-        }/api/products/${id}?populate=thumbnail,categories`
+        }/api/products/${id}?populate[thumbnail]=*&populate[categories]=*&populate[product_images][populate]=image`
       );
       
       return data;
     };
-    
-    
     
     
 
@@ -42,7 +41,6 @@ export default function Product() {
     useEffect(() => {
         document.title = `Product Store | product ${id} page`
     }, []);
-    console.log(data?.data?.attributes?.categories?.data[0]?.attributes?.title);
     if (isLoading) {
         return (
           <Box
@@ -93,7 +91,7 @@ export default function Product() {
           <Heading as="h1" size="xl" fontWeight="bold">
             {data?.data?.attributes?.title}
           </Heading>
-          <Text fontSize="lg" color={useColorModeValue("gray.600", "gray.400")}>
+          <Text fontSize="lg" color={textColor}>
             {data?.data?.attributes?.description}
           </Text>
           <Text fontSize="lg" fontWeight="bold">

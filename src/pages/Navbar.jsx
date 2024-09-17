@@ -29,10 +29,10 @@ export default function Navbar() {
       bg={useColorModeValue("gray.100", "gray.900")}
       className="bg-white shadow-md fixed top-0 left-0 w-full z-50"
     >
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div className="container mx-auto px-10 py-3 flex justify-between items-center">
         {/* Logo */}
         <div className={`text-3xl font-bold`} style={{ color: textColor }}>
-          BrandName
+          My App
         </div>
 
         {/* Desktop Menu */}
