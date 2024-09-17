@@ -21,7 +21,7 @@ import { formatPrice } from '../utils/functions';
 
 
 export default function Product() {
-    const { id, category } = useParams();
+    const { id } = useParams();
     const navigate = useNavigate()
     const getProductList = async () => {
       const { data } = await axios.get(
@@ -29,17 +29,20 @@ export default function Product() {
           import.meta.env.VITE_SERVER_URL
         }/api/products/${id}?populate=thumbnail,categories`
       );
+      
       return data;
     };
+    
+    
     
     
 
     const { isLoading, data, error } = useQuery(["products",id],getProductList);
     const goBack = () => navigate(-1)
-    console.log(category);
     useEffect(() => {
         document.title = `Product Store | product ${id} page`
     }, []);
+    console.log(data?.data?.attributes?.categories?.data[0]?.attributes?.title);
     if (isLoading) {
         return (
           <Box
@@ -53,7 +56,7 @@ export default function Product() {
         );
     }
   return (
-    <Box maxW="7xl"  mx="auto" px={{ base: 4, md: 8 }} py={{ base: 8, md: 16 }}>
+    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 8 }} py={{ base: 8, md: 16 }}>
       {/* Back Button */}
       <Button
         mb={4}
@@ -92,6 +95,11 @@ export default function Product() {
           </Heading>
           <Text fontSize="lg" color={useColorModeValue("gray.600", "gray.400")}>
             {data?.data?.attributes?.description}
+          </Text>
+          <Text fontSize="lg" fontWeight="bold">
+            Category:{" "}
+            {data?.data?.attributes?.categories?.data[0]?.attributes?.title ||
+              "No Category"}
           </Text>
           <Stack direction="row" align="center" spacing={4}>
             <Text fontSize="2xl" fontWeight="bold">
