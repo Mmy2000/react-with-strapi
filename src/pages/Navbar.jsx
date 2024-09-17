@@ -218,6 +218,35 @@ export default function Navbar() {
               <Button onClick={toggleColorMode}>
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
+              <Stack
+                flex={{ base: 1, md: 0 }}
+                justify={"flex-end"}
+                direction={"row"}
+                spacing={6}
+              >
+                <Button
+                  as={RouterLink}
+                  fontSize={"sm"}
+                  fontWeight={400}
+                  variant={"link"}
+                  to={'/login'}
+                >
+                  Sign In
+                </Button>
+                <Button
+                  as={RouterLink}
+                  display={{ base: "none", md: "inline-flex" }}
+                  fontSize={"sm"}
+                  fontWeight={600}
+                  color={"white"}
+                  to={'/regsiter'}
+                  _hover={{
+                    bg: "gray.400",
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Stack>
 
               <Menu>
                 <MenuButton

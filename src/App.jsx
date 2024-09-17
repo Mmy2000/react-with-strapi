@@ -11,6 +11,8 @@ import Layout from './pages/Layout'
 import { QueryClient, QueryClientProvider } from "react-query";
 import Contact from './pages/Contact'
 import Notfound from './components/Notfound'
+import Register from './pages/Register'
+import Login from './pages/Login'
 
 let router = createBrowserRouter([
   {
@@ -36,6 +38,14 @@ let router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/regsiter",
+        element: <Register />,
       },
       { path: "*", element: <Notfound /> },
     ],
