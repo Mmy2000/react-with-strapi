@@ -1,14 +1,39 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Flex,
+  Avatar,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  useDisclosure,
+  useColorModeValue,
+  Stack,
+  useColorMode,
+  Center,
+} from "@chakra-ui/react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  const textColor = useColorModeValue("black", "white");
 
   return (
-    <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+    <Box
+      bg={useColorModeValue("gray.100", "gray.900")}
+      className="bg-white shadow-md fixed top-0 left-0 w-full z-50"
+    >
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
-        <div className="text-3xl font-bold text-gray-800">BrandName</div>
+        <div className={`text-3xl font-bold`} style={{ color: textColor }}>
+          BrandName
+        </div>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8">
@@ -16,9 +41,10 @@ export default function Navbar() {
             to="/"
             className={({ isActive }) =>
               isActive
-                ? "text-blue-600 font-bold"
-                : "text-gray-600 hover:text-blue-600 transition duration-300"
+                ? `font-bold`
+                : `hover:text-blue-600 transition duration-300`
             }
+            style={{ color: textColor }}
           >
             Home
           </NavLink>
@@ -26,9 +52,10 @@ export default function Navbar() {
             to="/about"
             className={({ isActive }) =>
               isActive
-                ? "text-blue-600 font-bold"
-                : "text-gray-600 hover:text-blue-600 transition duration-300"
+                ? `font-bold`
+                : `hover:text-blue-600 transition duration-300`
             }
+            style={{ color: textColor }}
           >
             About
           </NavLink>
@@ -36,9 +63,10 @@ export default function Navbar() {
             to="/products"
             className={({ isActive }) =>
               isActive
-                ? "text-blue-600 font-bold"
-                : "text-gray-600 hover:text-blue-600 transition duration-300"
+                ? `font-bold`
+                : `hover:text-blue-600 transition duration-300`
             }
+            style={{ color: textColor }}
           >
             Products
           </NavLink>
@@ -46,26 +74,64 @@ export default function Navbar() {
             to="/contact"
             className={({ isActive }) =>
               isActive
-                ? "text-blue-600 font-bold"
-                : "text-gray-600 hover:text-blue-600 transition duration-300"
+                ? `font-bold`
+                : `hover:text-blue-600 transition duration-300`
             }
+            style={{ color: textColor }}
           >
             Contact
           </NavLink>
         </div>
 
         {/* Call to Action */}
-        <div className="hidden md:block">
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              isActive
-                ? "bg-blue-700 text-white px-6 py-2 rounded-md transition duration-300 shadow-lg"
-                : "bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300 shadow-lg"
-            }
-          >
-            Login
-          </NavLink>
+        <div className="flex items-center justify-center ">
+          <div className="hidden md:block">
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-blue-700 text-white px-6 py-2 rounded-md transition duration-300 shadow-lg"
+                  : "bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300 shadow-lg"
+              }
+            >
+              Login
+            </NavLink>
+          </div>
+          <Button className="mx-2" onClick={toggleColorMode}>
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}{" "}
+          </Button>
+          <Menu>
+            <MenuButton
+              as={Button}
+              rounded={"full"}
+              variant={"link"}
+              cursor={"pointer"}
+              minW={0}
+            >
+              <Avatar
+                size={"sm"}
+                src={"https://avatars.dicebear.com/api/male/username.svg"}
+              />
+            </MenuButton>
+            <MenuList alignItems={"center"}>
+              <br />
+              <Center>
+                <Avatar
+                  size={"2xl"}
+                  src={"https://avatars.dicebear.com/api/male/username.svg"}
+                />
+              </Center>
+              <br />
+              <Center>
+                <p>Username</p>
+              </Center>
+              <br />
+              <MenuDivider />
+              <MenuItem>Your Servers</MenuItem>
+              <MenuItem>Account Settings</MenuItem>
+              <MenuItem>Logout</MenuItem>
+            </MenuList>
+          </Menu>
         </div>
 
         {/* Mobile Menu Button */}
@@ -100,8 +166,9 @@ export default function Navbar() {
             className={({ isActive }) =>
               isActive
                 ? "block px-4 py-2 bg-blue-50 text-blue-600"
-                : "block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition duration-300"
+                : "block px-4 py-2 hover:bg-blue-50 transition duration-300"
             }
+            style={{ color: textColor }}
           >
             Home
           </NavLink>
@@ -110,8 +177,9 @@ export default function Navbar() {
             className={({ isActive }) =>
               isActive
                 ? "block px-4 py-2 bg-blue-50 text-blue-600"
-                : "block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition duration-300"
+                : "block px-4 py-2 hover:bg-blue-50 transition duration-300"
             }
+            style={{ color: textColor }}
           >
             About
           </NavLink>
@@ -120,8 +188,9 @@ export default function Navbar() {
             className={({ isActive }) =>
               isActive
                 ? "block px-4 py-2 bg-blue-50 text-blue-600"
-                : "block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition duration-300"
+                : "block px-4 py-2 hover:bg-blue-50 transition duration-300"
             }
+            style={{ color: textColor }}
           >
             Products
           </NavLink>
@@ -130,26 +199,28 @@ export default function Navbar() {
             className={({ isActive }) =>
               isActive
                 ? "block px-4 py-2 bg-blue-50 text-blue-600"
-                : "block px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition duration-300"
+                : "block px-4 py-2 hover:bg-blue-50 transition duration-300"
             }
+            style={{ color: textColor }}
           >
             Contact
           </NavLink>
           <NavLink
-            to="/get-started"
+            to="/login"
             className={({ isActive }) =>
               isActive
                 ? "block bg-blue-700 text-white text-center px-4 py-2 mt-2 rounded-md"
                 : "block bg-blue-600 text-white text-center px-4 py-2 mt-2 rounded-md hover:bg-blue-700 transition duration-300"
             }
           >
-            Get Started
+            Login
           </NavLink>
         </div>
       )}
-    </nav>
+    </Box>
   );
 }
+
 // "use client";
 
 // import {

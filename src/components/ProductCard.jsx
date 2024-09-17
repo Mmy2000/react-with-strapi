@@ -13,7 +13,7 @@ import {
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Link } from 'react-router-dom';
 import { formatPrice, textSlicer } from '../utils/functions';
-
+import { useColorModeValue } from "@chakra-ui/react";
 
 
 export default function ProductCard({attributes,id}) {
@@ -24,7 +24,7 @@ export default function ProductCard({attributes,id}) {
       <Card
         maxW="sm"
         mx={"auto"}
-        bg="white"
+        bg={useColorModeValue("white", "gray.700")} // Adjust background color for dark mode
         boxShadow="2xl"
         borderRadius="xl"
         overflow="hidden"
@@ -45,13 +45,26 @@ export default function ProductCard({attributes,id}) {
             border="5px solid #f4f7fb"
           />
           <Stack spacing={4} textAlign="center">
-            <Heading size="lg" color="gray.800" fontWeight="semibold">
+            <Heading
+              size="lg"
+              color={useColorModeValue("gray.800", "white")} // White text in dark mode
+              fontWeight="semibold"
+            >
               {attributes.title}
             </Heading>
-            <Text fontSize="sm" color="gray.600" px={4} lineHeight="1.8">
+            <Text
+              fontSize="sm"
+              color={useColorModeValue("gray.600", "gray.300")} // Lighter text in dark mode
+              px={4}
+              lineHeight="1.8"
+            >
               {textSlicer(attributes.description)}
             </Text>
-            <Text color="blue.500" fontSize="2xl" fontWeight="bold">
+            <Text
+              color={useColorModeValue("blue.500", "blue.300")} // Adjust text color for price in dark mode
+              fontSize="2xl"
+              fontWeight="bold"
+            >
               ${formatPrice(attributes.price)}
             </Text>
             <Button
