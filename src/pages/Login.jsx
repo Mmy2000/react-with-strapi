@@ -14,12 +14,15 @@ import {
   useColorModeValue,
   InputGroup,
   InputRightElement,
+  FormHelperText
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
 
 export default function Login() {
+  const [isEmail, setIsEmail] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
   const [user, setUser] = useState({
     email:'',
     password:''
@@ -31,6 +34,15 @@ export default function Login() {
   }
   const submitHandler = e =>{
     e.preventDefault()
+    if (!user.email) {
+      setIsEmail(true)
+      if (!user.password) {
+        setIsPassword(true)
+      }
+      return;
+    }
+    setIsEmail(false)
+    setIsPassword(false)
     console.log(user);
     
   }
@@ -58,24 +70,28 @@ export default function Login() {
               <FormLabel>Email address</FormLabel>
               <Input
                 type="email"
-                isInvalid
+                isInvalid={isEmail}
                 errorBorderColor="crimson"
                 value={user.email}
                 name="email"
                 onChange={onChangeHandler}
               />
+              {isEmail?<FormHelperText color={"red.500"}>
+                Email is Required
+              </FormHelperText>:null}
             </FormControl>
-            <FormControl id="password" isRequired>
+            <FormControl id="password">
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
                   onChange={onChangeHandler}
                   value={user.password}
-                  isInvalid
+                  isInvalid={isPassword}
                   errorBorderColor="crimson"
                   name="password"
                   type={showPassword ? "text" : "password"}
                 />
+
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
@@ -87,6 +103,9 @@ export default function Login() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {isPassword?<FormHelperText color={"red.500"}>
+                Password is Required
+              </FormHelperText>:null}
             </FormControl>
             <Stack spacing={10}>
               <Stack
