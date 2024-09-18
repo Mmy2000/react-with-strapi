@@ -20,7 +20,20 @@ import { useState } from "react";
 
 
 export default function Login() {
+  const [user, setUser] = useState({
+    email:'',
+    password:''
+  });
   const [showPassword, setShowPassword] = useState(false);
+  const onChangeHandler = e =>{
+    const {name,value} = e.target
+    setUser({...user , [name]:value})
+  }
+  const submitHandler = e =>{
+    e.preventDefault()
+    console.log(user);
+    
+  }
   return (
     <Flex
       minH={"100vh"}
@@ -33,20 +46,36 @@ export default function Login() {
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
         </Stack>
         <Box
+          as={"form"}
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
           p={8}
+          onSubmit={submitHandler}
         >
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                isInvalid
+                errorBorderColor="crimson"
+                value={user.email}
+                name="email"
+                onChange={onChangeHandler}
+              />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
+                <Input
+                  onChange={onChangeHandler}
+                  value={user.password}
+                  isInvalid
+                  errorBorderColor="crimson"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                />
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
@@ -74,6 +103,7 @@ export default function Login() {
                 _hover={{
                   bg: "blue.500",
                 }}
+                type="submit"
               >
                 Sign in
               </Button>
