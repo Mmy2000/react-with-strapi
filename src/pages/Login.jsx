@@ -76,9 +76,11 @@ export default function Login() {
                 name="email"
                 onChange={onChangeHandler}
               />
-              {isEmail?<FormHelperText color={"red.500"}>
-                Email is Required
-              </FormHelperText>:null}
+              {isEmail ? (
+                <FormHelperText color={"red.500"}>
+                  Email is Required
+                </FormHelperText>
+              ) : null}
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
@@ -103,9 +105,11 @@ export default function Login() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              {isPassword?<FormHelperText color={"red.500"}>
-                Password is Required
-              </FormHelperText>:null}
+              {isPassword ? (
+                <FormHelperText color={"red.500"}>
+                  Password is Required
+                </FormHelperText>
+              ) : null}
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -117,10 +121,10 @@ export default function Login() {
                 <Text color={"blue.400"}>Forgot password?</Text>
               </Stack>
               <Button
-                bg={"blue.400"}
+                bg={isEmail || isPassword ? "red.500" : "blue.400"}
                 color={"white"}
                 _hover={{
-                  bg: "blue.500",
+                  bg: isEmail || isPassword ? "red.300" : "blue.300",
                 }}
                 type="submit"
               >
