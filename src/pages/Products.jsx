@@ -39,7 +39,7 @@ export default function Products() {
       templateColumns={"repeat(auto-fill,minmax(300px,1fr))"}
       gap={5}
     >
-      {data.data.map((product) => (
+      {data?.data?.map((product) => (
         <ProductCard key={product.id} {...product} />
       ))}
     </Grid>
