@@ -18,14 +18,18 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLogin, userLogin } from "../app/features/loginSlice";
 
 
 export default function Login() {
+  const dispatch = useDispatch()
+  const {loading , data , error} = useSelector(selectLogin)
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [user, setUser] = useState({
-    email:'',
-    password:''
+    identifier: "",
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -36,14 +40,14 @@ export default function Login() {
 
   const submitHandler = e =>{
     e.preventDefault()
-    if (!user.email) {
+    if (!user.identifier) {
       setIsEmail(true)
       if (!user.password) {
         setIsPassword(true)
       }
       return;
     }
-    if (!user.email) {
+    if (!user.identifier) {
       setIsEmail(true)
       return
     }
@@ -53,7 +57,9 @@ export default function Login() {
     }
     setIsEmail(false)
     setIsPassword(false)
+    dispatch(userLogin(user))
     console.log(user);
+    
     
   }
   return (
@@ -82,8 +88,8 @@ export default function Login() {
                 type="email"
                 isInvalid={isEmail}
                 errorBorderColor="crimson"
-                value={user.email}
-                name="email"
+                value={user.identifier}
+                name="identifier"
                 onChange={onChangeHandler}
               />
               {isEmail ? (
@@ -131,12 +137,14 @@ export default function Login() {
                 <Text color={"blue.400"}>Forgot password?</Text>
               </Stack>
               <Button
+              
                 bg={isEmail || isPassword ? "red.500" : "blue.400"}
                 color={"white"}
                 _hover={{
                   bg: isEmail || isPassword ? "red.300" : "blue.300",
                 }}
                 type="submit"
+                isLoading={loading}
               >
                 Sign in
               </Button>

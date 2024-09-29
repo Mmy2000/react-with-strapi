@@ -7,14 +7,14 @@ const initialState = {
   error: null,
 };
 
-export const userLogin = createAsyncThunk("login/userLogin", async (_, thunkAPI) => {
+export const userLogin = createAsyncThunk("login/userLogin", async (user, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
 
   try {
-    const { data } = await axiosInstance.get(`/api/auth/local`);
+    const { data } = await axiosInstance.post(`/api/auth/local`,user);
     return data;
   } catch (error) {
-    return rejectWithValue(error.response.data); // Ensure the error is in the expected format
+    return rejectWithValue(error); // Ensure the error is in the expected format
   }
 });
 
