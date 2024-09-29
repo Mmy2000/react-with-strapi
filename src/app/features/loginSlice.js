@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../api/axios.config"; // Fix typo: 'axois.config' to 'axios.config'
+import { createStandaloneToast } from "@chakra-ui/react";
+
+
+const {toast} = createStandaloneToast()
 
 const initialState = {
   loading: false, // Fix typo: 'loadnig' to 'loading'
@@ -31,11 +35,25 @@ const loginSlice = createSlice({
         state.loading = false; // Fix typo: 'loadnig' to 'loading'
         state.data = action.payload;
         state.error = null;
+        toast({
+          title: 'Logged in successfully.',
+          description: ".",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.loading = false; // Fix typo: 'loadnig' to 'loading'
         state.data = [];
         state.error = action.payload;
+        toast({
+          title: action.payload.response.data.error.message,
+          description:"Make sure you have the correct Email or Password",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
       });
   },
 });
