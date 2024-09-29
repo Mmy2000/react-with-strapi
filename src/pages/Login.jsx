@@ -28,10 +28,12 @@ export default function Login() {
     password:''
   });
   const [showPassword, setShowPassword] = useState(false);
+
   const onChangeHandler = e =>{
     const {name,value} = e.target
     setUser({...user , [name]:value})
   }
+
   const submitHandler = e =>{
     e.preventDefault()
     if (!user.email) {
@@ -40,6 +42,14 @@ export default function Login() {
         setIsPassword(true)
       }
       return;
+    }
+    if (!user.email) {
+      setIsEmail(true)
+      return
+    }
+    if (!user.password) {
+      setIsPassword(true)
+      return
     }
     setIsEmail(false)
     setIsPassword(false)
