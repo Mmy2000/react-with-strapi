@@ -5,12 +5,14 @@ import App from './App.jsx'
 import './index.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Provider } from "react-redux";
+import { store } from './app/store.js';
 
 
 createRoot(document.getElementById("root")).render(
-  
-      <ChakraProvider>
-        <App />
-      </ChakraProvider>
-    
+  <Provider store={store}>
+    <ChakraProvider>
+      <App />
+    </ChakraProvider>
+  </Provider>
 );
