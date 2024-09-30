@@ -17,10 +17,16 @@ import {
   useColorMode,
   Center,
 } from "@chakra-ui/react";
+import CookieService from "./CookieService";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
+  const token = CookieService.get('jwt')
+  const logout = ()=>{
+    CookieService.delete('jwt')
+    window.location.reload()
+  }
 
   const textColor = useColorModeValue("black", "white");
 
@@ -85,53 +91,56 @@ export default function Navbar() {
 
         {/* Call to Action */}
         <div className="flex items-center justify-center ">
-          <div className="hidden md:block">
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-blue-700 text-white px-6 py-2 rounded-md transition duration-300 shadow-lg"
-                  : "bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300 shadow-lg"
-              }
-            >
-              Login
-            </NavLink>
-          </div>
           <Button className="mx-2" onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}{" "}
           </Button>
-          <Menu>
-            <MenuButton
-              as={Button}
-              rounded={"full"}
-              variant={"link"}
-              cursor={"pointer"}
-              minW={0}
-            >
-              <Avatar
-                size={"sm"}
-                src={"https://avatars.dicebear.com/api/male/username.svg"}
-              />
-            </MenuButton>
-            <MenuList alignItems={"center"}>
-              <br />
-              <Center>
-                <Avatar
-                  size={"2xl"}
-                  src={"https://avatars.dicebear.com/api/male/username.svg"}
-                />
-              </Center>
-              <br />
-              <Center>
-                <p>Username</p>
-              </Center>
-              <br />
-              <MenuDivider />
-              <MenuItem>Your Servers</MenuItem>
-              <MenuItem>Account Settings</MenuItem>
-              <MenuItem>Logout</MenuItem>
-            </MenuList>
-          </Menu>
+          <div className="hidden md:block">
+            {!token ? (
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-blue-700 text-white px-6 py-2 rounded-md transition duration-300 shadow-lg"
+                    : "bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300 shadow-lg"
+                }
+              >
+                Login
+              </NavLink>
+            ) : (
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
+                >
+                  <Avatar
+                    size={"sm"}
+                    src={"https://avatars.dicebear.com/api/male/username.svg"}
+                  />
+                </MenuButton>
+                <MenuList alignItems={"center"}>
+                  <br />
+                  <Center>
+                    <Avatar
+                      size={"2xl"}
+                      src={"https://avatars.dicebear.com/api/male/username.svg"}
+                    />
+                  </Center>
+                  <br />
+                  <Center>
+                    <p>Username</p>
+                  </Center>
+                  <br />
+                  <MenuDivider />
+                  <MenuItem>Your Servers</MenuItem>
+                  <MenuItem>Account Settings</MenuItem>
+                  <MenuItem onClick={logout}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            )}
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
