@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../api/axios.config"; // Fix typo: 'axois.config' to 'axios.config'
 import { createStandaloneToast } from "@chakra-ui/react";
 import CookieService from "../../pages/CookieService";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const { toast } = createStandaloneToast();
 
@@ -52,7 +53,9 @@ const loginSlice = createSlice({
           duration: 9000,
           isClosable: true,
         });
+        
         window.location.reload()
+        
         
       })
       .addCase(userLogin.rejected, (state, action) => {
