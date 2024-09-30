@@ -13,6 +13,8 @@ import Contact from './pages/Contact'
 import Notfound from './components/Notfound'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import ProtectedRoute from './components/ProtectedRoute'
+
 
 let router = createBrowserRouter([
   {
@@ -21,23 +23,43 @@ let router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/products",
-        element: <Products />,
+        element: (
+          <ProtectedRoute>
+            <Products />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "products/:id",
-        element: <Product />,
+        element: (
+          <ProtectedRoute>
+            <Product />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/about",
-        element: <About />,
+        element: (
+          <ProtectedRoute>
+            <About />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/contact",
-        element: <Contact />,
+        element: (
+          <ProtectedRoute>
+            <Contact />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/login",
