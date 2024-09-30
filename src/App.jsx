@@ -14,8 +14,9 @@ import Notfound from './components/Notfound'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
+import CookieService from './pages/CookieService'
 
-
+const token = CookieService.get('jwt')
 let router = createBrowserRouter([
   {
     path: "",

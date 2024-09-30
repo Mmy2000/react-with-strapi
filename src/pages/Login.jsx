@@ -20,9 +20,12 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLogin, userLogin } from "../app/features/loginSlice";
+import CookieService from "./CookieService";
+import { Navigate } from "react-router-dom";
 
 
 export default function Login() {
+  const token = CookieService.get('jwt')
   const dispatch = useDispatch()
   const {loading , data , error} = useSelector(selectLogin)
   const [isEmail, setIsEmail] = useState(false);
@@ -59,6 +62,9 @@ export default function Login() {
     setIsPassword(false)
     dispatch(userLogin(user))
     console.log(user);
+    if (token) {
+      <Navigate to={'/'}/>
+    }
     
     
   }

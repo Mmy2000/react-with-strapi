@@ -52,6 +52,7 @@ const loginSlice = createSlice({
           duration: 9000,
           isClosable: true,
         });
+        window.location.reload()
         
       })
       .addCase(userLogin.rejected, (state, action) => {
