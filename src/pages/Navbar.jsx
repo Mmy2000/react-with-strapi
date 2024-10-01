@@ -18,8 +18,11 @@ import {
   Center,
 } from "@chakra-ui/react";
 import CookieService from "./CookieService";
+import { useSelector } from "react-redux";
+import { selectCart } from "../app/features/cartSlice";
 
 export default function Navbar() {
+  const {cartProducts} = useSelector(selectCart)
   const [isOpen, setIsOpen] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
   const token = CookieService.get('jwt')
@@ -94,7 +97,9 @@ export default function Navbar() {
           <Button className="mx-2" onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}{" "}
           </Button>
-          <Button className="me-2" onClick={ ()=>{}}>Cart (0)</Button>
+          <Button className="me-2" onClick={() => {}}>
+            Cart ({cartProducts.length})
+          </Button>
           <div className="hidden md:block">
             {!token ? (
               <NavLink

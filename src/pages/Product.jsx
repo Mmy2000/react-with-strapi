@@ -18,10 +18,14 @@ import {
 import { FiArrowLeft } from "react-icons/fi"; // Importing the arrow icon
 import ProductDetailSceleton from '../components/ProductDetailSceleton';
 import { formatPrice } from '../utils/functions';
+import { addToCart } from '../app/features/cartSlice';
+import { useDispatch } from 'react-redux';
+
 
 
 export default function Product() {
   const textColor = useColorModeValue("gray.600", "gray.400");
+   const dispatch = useDispatch();
     const { id } = useParams();
     const navigate = useNavigate()
     const getProductList = async () => {
@@ -38,6 +42,11 @@ export default function Product() {
 
     const { isLoading, data, error } = useQuery(["products",id],getProductList);
     const goBack = () => navigate(-1)
+
+    const addToCartHandler = ()=>{
+      
+      dispatch(addToCart(data.data))
+    }
     useEffect(() => {
         document.title = `Product Store | product ${id} page`
     }, []);
@@ -116,8 +125,7 @@ export default function Product() {
 
           <Button
             w={"full"}
-            as={Link}
-            to={`/products`}
+            onClick={addToCartHandler}
             bgGradient="linear(to-r, cyan.400, blue.500)"
             size="md"
             color="white"
