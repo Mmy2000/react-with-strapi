@@ -18,8 +18,10 @@ import {
   Center,
 } from "@chakra-ui/react";
 import CookieService from "./CookieService";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCart } from "../app/features/cartSlice";
+import { onOpenCartDrawerAction } from "../app/features/globalSlice";
+
 
 export default function Navbar() {
   const {cartProducts} = useSelector(selectCart)
@@ -30,15 +32,18 @@ export default function Navbar() {
     CookieService.delete('jwt')
     window.location.reload()
   }
-
+  const dispatch = useDispatch();
   const textColor = useColorModeValue("black", "white");
+  const onOpen = () => {
+    dispatch(onOpenCartDrawerAction());
+  };
 
   return (
     <Box
       bg={useColorModeValue("gray.100", "gray.900")}
       className="bg-white shadow-md fixed top-0 left-0 w-full z-50"
     >
-      <div className="container mx-auto px-10 py-3 flex justify-between items-center">
+      <div className=" mx-auto px-10 py-3 flex justify-between items-center">
         {/* Logo */}
         <div className={`text-3xl font-bold`} style={{ color: textColor }}>
           My App
@@ -97,7 +102,7 @@ export default function Navbar() {
           <Button className="mx-2" onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}{" "}
           </Button>
-          <Button className="me-2" onClick={() => {}}>
+          <Button className="me-2" onClick={onOpen}>
             Cart ({cartProducts.length})
           </Button>
           <div className="hidden md:block">
