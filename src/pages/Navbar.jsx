@@ -94,6 +94,7 @@ export default function Navbar() {
           <Button className="mx-2" onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}{" "}
           </Button>
+          <Button className="me-2" onClick={ ()=>{}}>Cart (0)</Button>
           <div className="hidden md:block">
             {!token ? (
               <NavLink
