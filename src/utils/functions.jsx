@@ -1,3 +1,5 @@
+import { createStandaloneToast, Toast } from "@chakra-ui/react";
+
 /**
  * Slices a given text to a specified maximum length and appends an ellipsis if the text exceeds that length.
  *
@@ -19,6 +21,34 @@ export function textSlicer(text, max= 100) {
  * @param {number} price - The price to be formatted.
  * @returns {string} - The formatted price with commas as thousands separators.
  */
+
 export function formatPrice(price) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const {toast} = createStandaloneToast();
+
+export const addProductToCart = (cartItem={} , shoppingCartItems=[])=>{
+  const existsItem = shoppingCartItems.find(item => item.id == cartItem.id)
+  if (existsItem) {
+    toast({
+      title: "Added to your Cart",
+      description: "This item already exist, the quantity will increased",
+      duration: 3000,
+      isClosable: true,
+      status: "success",
+    });
+    return shoppingCartItems.map((item) =>
+      item.id == cartItem.id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+  }
+  toast({
+    title: "Added to your Cart",
+    duration: 2000,
+    isClosable: true,
+    status:'success'
+  });
+  return [...shoppingCartItems , {...cartItem,quantity:1}]
+  
+
 }
