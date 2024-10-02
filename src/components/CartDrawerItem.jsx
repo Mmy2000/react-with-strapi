@@ -2,6 +2,7 @@ import { Button, Divider, Flex,Image, Stack,Text } from '@chakra-ui/react';
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { formatPrice } from '../utils/functions';
+import { removeFromCart } from '../app/features/cartSlice';
 
 
 const CartDrawerItem = ({id,attributes:{thumbnail,title,price},quantity}) => {
@@ -27,7 +28,7 @@ const CartDrawerItem = ({id,attributes:{thumbnail,title,price},quantity}) => {
             <Text fontSize={"sm"} ml={3}>Price : ${formatPrice(price)}</Text>
           </Flex>
           <Text fontSize={"sm"}>Quantity : {quantity}</Text>
-          <Button variant="solid" colorScheme="red" size="xs" w="fit-content">
+          <Button onClick={()=> dispatch(removeFromCart(id))}  variant="outline" colorScheme="red" size="sm" w="fit-content">
             Remove
           </Button>
         </Stack>
