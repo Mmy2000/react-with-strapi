@@ -17,8 +17,7 @@ import {
   selectGlobal,
 } from "../app/features/globalSlice";
 import CartDrawerItem from "./CartDrawerItem";
-import { selectCart } from "../app/features/cartSlice";
-
+import { selectCart , clearCart } from "../app/features/cartSlice";
 const CartDrawer = () => {
   const btnRef = useRef();
   const { isOpenCartDrawer } = useSelector(selectGlobal);
@@ -44,14 +43,13 @@ const CartDrawer = () => {
         <DrawerBody>
           {cartProducts.length? cartProducts.map((item) => (
             <CartDrawerItem key={item.id} {...item} />
-          )):(<Text>Your Cart Is Empty</Text>)}
+          )):(<Text fontSize={"lg"}>Your Cart Is Empty</Text>)}
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant="outline" colorScheme="red" mr={3} onClick={() => {}}>
+          <Button variant="outline" colorScheme="red" mr={3} onClick={() => dispatch(clearCart())}>
             Clear All
           </Button>
-          <Button colorScheme="blue">Save</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
