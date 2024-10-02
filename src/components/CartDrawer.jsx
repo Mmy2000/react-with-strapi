@@ -10,17 +10,24 @@ import {
   DrawerBody,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { onCloseCartDrawerAction, onOpenCartDrawerAction, selectGlobal } from "../app/features/globalSlice";
+import {
+  onCloseCartDrawerAction,
+  onOpenCartDrawerAction,
+  selectGlobal,
+} from "../app/features/globalSlice";
+import CartDrawerItem from "./CartDrawerItem";
+import { selectCart } from "../app/features/cartSlice";
 
 const CartDrawer = () => {
-    const btnRef = useRef()
-    const { isOpenCartDrawer, onCloseCartDrawer, onOpenCartDrawer } =
-      useSelector(selectGlobal);
-      const dispatch = useDispatch()
-      const onClose = ()=>{
-        dispatch(onCloseCartDrawerAction())
-      }
-      
+  const btnRef = useRef();
+  const { isOpenCartDrawer } = useSelector(selectGlobal);
+  const dispatch = useDispatch();
+  const { cartProducts } = useSelector(selectCart);
+
+  const onClose = () => {
+    dispatch(onCloseCartDrawerAction());
+  };
+
   return (
     <Drawer
       isOpen={isOpenCartDrawer}
@@ -33,7 +40,11 @@ const CartDrawer = () => {
         <DrawerCloseButton />
         <DrawerHeader>Your Shopping Cart</DrawerHeader>
 
-        <DrawerBody></DrawerBody>
+        <DrawerBody>
+          {cartProducts.map((item) => (
+            <CartDrawerItem key={item.id} {...item} />
+          ))}
+        </DrawerBody>
 
         <DrawerFooter>
           <Button variant="outline" colorScheme="red" mr={3} onClick={() => {}}>
