@@ -8,6 +8,7 @@ import {
   DrawerFooter,
   DrawerCloseButton,
   DrawerBody,
+  Text
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -41,9 +42,9 @@ const CartDrawer = () => {
         <DrawerHeader>Your Shopping Cart</DrawerHeader>
 
         <DrawerBody>
-          {cartProducts.map((item) => (
+          {cartProducts.length? cartProducts.map((item) => (
             <CartDrawerItem key={item.id} {...item} />
-          ))}
+          )):(<Text>Your Cart Is Empty</Text>)}
         </DrawerBody>
 
         <DrawerFooter>
