@@ -83,11 +83,15 @@ let router = createBrowserRouter([
     element: <LayoutDashboard />, // Dashboard Layout
     children: [
       {
-        index: true,
         element: <h2>products</h2>,
         path: "products",
       },
       {
+        element: <h2>categories</h2>,
+        path: "categories",
+      },
+      {
+        index: true,
         element: (
           <ProtectedRoute>
             <AdminDashboard />
