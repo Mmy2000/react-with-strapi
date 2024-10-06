@@ -17,6 +17,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import CookieService from './pages/CookieService'
 import AdminDashboard from './pages/dashboard'
 import LayoutDashboard from './pages/dashboard/LayoutDashboard'
+import DashboardProductsTable from './pages/dashboard/DashboardProductsTable'
 
 const token = CookieService.get('jwt')
 let router = createBrowserRouter([
@@ -83,7 +84,7 @@ let router = createBrowserRouter([
     element: <LayoutDashboard />, // Dashboard Layout
     children: [
       {
-        element: <h2>products</h2>,
+        element: <DashboardProductsTable/>,
         path: "products",
       },
       {
