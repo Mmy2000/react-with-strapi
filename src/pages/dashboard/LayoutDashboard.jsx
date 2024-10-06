@@ -28,15 +28,17 @@ import {
   FiMenu,
   FiBell,
   FiChevronDown,
-} from 'react-icons/fi'
+} from "react-icons/fi";
 import { Outlet } from 'react-router-dom'
 import {Link as RouterLink} from 'react-router-dom'
+import { AiOutlineProduct } from "react-icons/ai";
+import { BiCategoryAlt } from "react-icons/bi";
 
 
 const LinkItems = [
   { to: "/dashboard", name: "Dashboard", icon: FiHome },
-  { to: "/dashboard/products", name: "Products", icon: FiBell },
-  { to: "/dashboard/categories", name: "Categories", icon: FiMenu },
+  { to: "/dashboard/products", name: "Products", icon: AiOutlineProduct },
+  { to: "/dashboard/categories", name: "Categories", icon: BiCategoryAlt },
 ];
 
 const SidebarContent = ({ onClose, ...rest }) => {
