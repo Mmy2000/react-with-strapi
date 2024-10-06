@@ -15,12 +15,14 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
 import CookieService from './pages/CookieService'
+import AdminDashboard from './pages/dashboard'
+import LayoutDashboard from './pages/dashboard/LayoutDashboard'
 
 const token = CookieService.get('jwt')
 let router = createBrowserRouter([
   {
-    path: "",
-    element: <Layout />,
+    path: "/",
+    element: <Layout />, // Main Layout for non-dashboard routes
     children: [
       {
         index: true,
@@ -31,7 +33,7 @@ let router = createBrowserRouter([
         ),
       },
       {
-        path: "/products",
+        path: "products",
         element: (
           <ProtectedRoute>
             <Products />
@@ -47,7 +49,7 @@ let router = createBrowserRouter([
         ),
       },
       {
-        path: "/about",
+        path: "about",
         element: (
           <ProtectedRoute>
             <About />
@@ -55,7 +57,7 @@ let router = createBrowserRouter([
         ),
       },
       {
-        path: "/contact",
+        path: "contact",
         element: (
           <ProtectedRoute>
             <Contact />
@@ -63,17 +65,36 @@ let router = createBrowserRouter([
         ),
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/register",
+        path: "register",
         element: <Register />,
       },
-      { path: "*", element: <Notfound /> },
+      {
+        path: "*",
+        element: <Notfound />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <LayoutDashboard />, // Dashboard Layout
+    children: [
+      {
+        index: true,
+        element: (
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        ),
+      },
+      // Add other dashboard-related routes here if needed
     ],
   },
 ]);
+
 
 const queryClient = new QueryClient();
 function App() {
