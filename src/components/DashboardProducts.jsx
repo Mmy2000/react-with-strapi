@@ -31,7 +31,6 @@ const DashboardProducts = () => {
   return (
     <TableContainer>
       <Table variant="simple">
-        <TableCaption>Products</TableCaption>
         <Thead>
           <Tr>
             <Th>ID</Th>
