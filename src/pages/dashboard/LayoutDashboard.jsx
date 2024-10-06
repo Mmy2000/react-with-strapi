@@ -29,15 +29,15 @@ import {
   FiBell,
   FiChevronDown,
 } from 'react-icons/fi'
+import { Outlet } from 'react-router-dom'
+import {Link as RouterLink} from 'react-router-dom'
 
 
 const LinkItems = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Favourites', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
-]
+  { to: "/dashboard", name: "Dashboard", icon: FiHome },
+  { to: "/dashboard/products", name: "Products", icon: FiBell },
+  { to: "/dashboard/categories", name: "Categories", icon: FiMenu },
+];
 
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
@@ -57,7 +57,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} to={link.to}>
           {link.name}
         </NavItem>
       ))}
@@ -65,11 +65,12 @@ const SidebarContent = ({ onClose, ...rest }) => {
   )
 }
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({to, icon, children, ...rest }) => {
   return (
     <Box
-      as="a"
-      href="#"
+    as={RouterLink}
+      
+      to={to}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
       <Flex
@@ -196,6 +197,7 @@ const LayoutDashboard = () => {
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {/* Content */}
+        <Outlet/>
       </Box>
     </Box>
   );

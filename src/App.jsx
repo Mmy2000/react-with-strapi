@@ -85,6 +85,12 @@ let router = createBrowserRouter([
       {
         index: true,
         element: (
+          <h2>products</h2>
+        ),
+        path:'products'
+      },
+      {
+        element: (
           <ProtectedRoute>
             <AdminDashboard />
           </ProtectedRoute>
