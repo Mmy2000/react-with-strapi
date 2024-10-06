@@ -84,10 +84,8 @@ let router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <h2>products</h2>
-        ),
-        path:'products'
+        element: <h2>products</h2>,
+        path: "products",
       },
       {
         element: (
@@ -95,6 +93,10 @@ let router = createBrowserRouter([
             <AdminDashboard />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "*",
+        element: <Notfound />,
       },
       // Add other dashboard-related routes here if needed
     ],
