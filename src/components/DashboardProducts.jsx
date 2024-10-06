@@ -1,8 +1,12 @@
 import React from 'react'
 import {TableContainer , Table , TableCaption , Thead , Th , Tbody , Tr , Tfoot,Td} from '@chakra-ui/react'
 import DashboardSkeleton from './DashboardSceleton';
+import { useGetDashboardDataQuery } from '../app/services/apiSlice';
 
 const DashboardProducts = () => {
+    const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
+    console.log(data);
+    
     return <DashboardSkeleton/>
   return (
     <TableContainer>
