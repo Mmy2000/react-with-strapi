@@ -1,7 +1,24 @@
-import React from 'react';
-import {Button , AlertDialog , AlertDialogOverlay , AlertDialogContent , AlertDialogHeader , AlertDialogCloseButton , AlertDialogBody , AlertDialogFooter} from '@chakra-ui/react'
-function CustomeAlertDailog({isOpen , onOpen , onClose}) {
-  
+import React from "react";
+import {
+  Button,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogCloseButton,
+  AlertDialogBody,
+  AlertDialogFooter,
+} from "@chakra-ui/react";
+function CustomeAlertDailog({
+  isOpen,
+  onOpen,
+  onClose,
+  title,
+  description,
+  cancelText = "Cancel",
+  okText = "Ok",
+  variant="solid",
+}) {
   const cancelRef = React.useRef();
 
   return (
@@ -17,18 +34,15 @@ function CustomeAlertDailog({isOpen , onOpen , onClose}) {
         <AlertDialogOverlay />
 
         <AlertDialogContent>
-          <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
+          <AlertDialogHeader>{title}</AlertDialogHeader>
           <AlertDialogCloseButton />
-          <AlertDialogBody>
-            Are you sure you want to discard all of your notes? 44 words will be
-            deleted.
-          </AlertDialogBody>
+          <AlertDialogBody>{description}</AlertDialogBody>
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              No
+            <Button variant={variant} ref={cancelRef} onClick={onClose}>
+              {cancelText}
             </Button>
-            <Button colorScheme="red" ml={3}>
-              Yes
+            <Button variant={variant} colorScheme="red" ml={3}>
+              {okText}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
