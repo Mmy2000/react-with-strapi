@@ -29,7 +29,8 @@ const DashboardProducts = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
   const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
-  console.log(data);
+  console.log(productId);
+  
 
   useEffect(() => {
     if (isSuccess) {
@@ -102,7 +103,7 @@ const DashboardProducts = () => {
                   <Button
                     onClick={ ()=> {
                       setProductId(product.id)
-                      onOpen
+                      onOpen()
                     }}
                     colorScheme="red"
                     variant={"solid"}
