@@ -37,8 +37,8 @@ const DashboardProducts = () => {
             <Th>Title</Th>
             <Th>Category</Th>
             <Th>Thumbnail</Th>
-            <Th >Price</Th>
-            <Th >Stock</Th>
+            <Th>Price</Th>
+            <Th>Stock</Th>
             <Th>Action</Th>
           </Tr>
         </Thead>
@@ -73,11 +73,25 @@ const DashboardProducts = () => {
                 >
                   <AiOutlineEye size={17} />
                 </Button>
-                <Button colorScheme="red" variant={"solid"} mr={3}>
-                  <BsTrash size={17} />
-                </Button>
-                <Button colorScheme="blue" variant={"solid"}>
+
+                <Button
+                  mr={3}
+                  onClick={() =>
+                    console.log(`update ${product.attributes.title}`)
+                  }
+                  colorScheme="blue"
+                  variant={"solid"}
+                >
                   <FiEdit2 />
+                </Button>
+                <Button
+                  onClick={() =>
+                    console.log(`delete ${product.attributes.title}`)
+                  }
+                  colorScheme="red"
+                  variant={"solid"}
+                >
+                  <BsTrash size={17} />
                 </Button>
               </Td>
             </Tr>
@@ -89,8 +103,8 @@ const DashboardProducts = () => {
             <Th>Title</Th>
             <Th>Category</Th>
             <Th>Thumbnail</Th>
-            <Th >Price</Th>
-            <Th >Stock</Th>
+            <Th>Price</Th>
+            <Th>Stock</Th>
             <Th>Action</Th>
           </Tr>
         </Tfoot>
