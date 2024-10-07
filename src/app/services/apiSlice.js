@@ -16,7 +16,15 @@ export const apiSlice = createApi({
             },
             providesTags: ['Products'],
         }),
+        deleteDashboardProduct:build.mutation({
+            query(id){
+                return {
+                    url:`/api/products/${id}`,
+                    method:'DELETE'
+                }
+            }
+        })
     }),
 });
 
-export const { useGetDashboardDataQuery } = apiSlice;
+export const { useGetDashboardDataQuery,useDeleteDashboardProductMutation } = apiSlice;
