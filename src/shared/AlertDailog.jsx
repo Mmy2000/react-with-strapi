@@ -19,6 +19,7 @@ function CustomeAlertDailog({
   okText = "Ok",
   variant = "solid",
   onOkHandler,
+  isLoading
 }) {
   const cancelRef = React.useRef();
 
@@ -47,6 +48,7 @@ function CustomeAlertDailog({
               variant={variant}
               colorScheme="red"
               ml={3}
+              isLoading={isLoading}
             >
               {okText}
             </Button>

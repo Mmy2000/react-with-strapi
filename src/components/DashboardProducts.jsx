@@ -115,7 +115,7 @@ const DashboardProducts = () => {
           </Tfoot>
         </Table>
       </TableContainer>
-      <CustomeAlertDailog onOkHandler={() => destroyProduct(1)} isOpen={isOpen} onOpen={onOpen} onClose={onClose} title={'Are you sure'} description={'Do you really wont to destroy this product? this action cannot be undone.'} okText="Destroy"/>
+      <CustomeAlertDailog onOkHandler={() => destroyProduct(5)} isLoading={isDestroying} isOpen={isOpen} onOpen={onOpen} onClose={onClose} title={'Are you sure'} description={'Do you really wont to destroy this product? this action cannot be undone.'} okText="Destroy"/>
     </>
   );
 };
