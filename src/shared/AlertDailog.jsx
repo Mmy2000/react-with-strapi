@@ -25,7 +25,6 @@ function CustomeAlertDailog({
 
   return (
     <>
-      <Button onClick={onOpen}>Discard</Button>
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}

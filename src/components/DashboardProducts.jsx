@@ -20,14 +20,23 @@ import { BsTrash } from "react-icons/bs";
 import { FiEdit2 } from "react-icons/fi";
 import { formatPrice } from "../utils/functions";
 import CustomeAlertDailog from "../shared/AlertDailog";
+import { useEffect, useState } from "react";
 
 
 
 const DashboardProducts = () => {
+  const [productId, setProductId] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
   const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
   console.log(data);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setProductId(null)
+      onClose()
+    }
+  }, [isSuccess]);
 
   if (isLoading) {
     return <DashboardSkeleton />;
@@ -36,6 +45,7 @@ const DashboardProducts = () => {
     <>
       <TableContainer>
         <Table variant="simple">
+          <TableCaption>Total Entries : {data?.data.length ?? 0}</TableCaption>
           <Thead>
             <Tr>
               <Th>ID</Th>
@@ -90,9 +100,10 @@ const DashboardProducts = () => {
                     <FiEdit2 />
                   </Button>
                   <Button
-                    onClick={
+                    onClick={ ()=> {
+                      setProductId(product.id)
                       onOpen
-                    }
+                    }}
                     colorScheme="red"
                     variant={"solid"}
                   >
@@ -115,7 +126,7 @@ const DashboardProducts = () => {
           </Tfoot>
         </Table>
       </TableContainer>
-      <CustomeAlertDailog onOkHandler={() => destroyProduct(5)} isLoading={isDestroying} isOpen={isOpen} onOpen={onOpen} onClose={onClose} title={'Are you sure'} description={'Do you really wont to destroy this product? this action cannot be undone.'} okText="Destroy"/>
+      <CustomeAlertDailog onOkHandler={() => destroyProduct(productId)} isLoading={isDestroying} isOpen={isOpen}  onOpen={onOpen} onClose={onClose} title={'Are you sure'} description={'Do you really wont to destroy this product? this action cannot be undone.'} okText="Destroy"/>
     </>
   );
 };
