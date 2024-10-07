@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import DashboardSkeleton from "./DashboardSceleton";
-import { useGetDashboardDataQuery } from "../app/services/apiSlice";
+import { useDeleteDashboardProductMutation, useGetDashboardDataQuery } from "../app/services/apiSlice";
 import { Link } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
@@ -26,6 +26,7 @@ import CustomeAlertDailog from "../shared/AlertDailog";
 const DashboardProducts = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
+  const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
   console.log(data);
 
   if (isLoading) {
@@ -114,7 +115,7 @@ const DashboardProducts = () => {
           </Tfoot>
         </Table>
       </TableContainer>
-      <CustomeAlertDailog isOpen={isOpen} onOpen={onOpen} onClose={onClose} title={'Are you sure'} description={'Do you really wont to destroy this product? this action cannot be undone.'} okText="Destroy"/>
+      <CustomeAlertDailog onOkHandler={() => destroyProduct(1)} isOpen={isOpen} onOpen={onOpen} onClose={onClose} title={'Are you sure'} description={'Do you really wont to destroy this product? this action cannot be undone.'} okText="Destroy"/>
     </>
   );
 };

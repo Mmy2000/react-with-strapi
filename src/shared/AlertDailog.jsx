@@ -17,7 +17,8 @@ function CustomeAlertDailog({
   description,
   cancelText = "Cancel",
   okText = "Ok",
-  variant="solid",
+  variant = "solid",
+  onOkHandler,
 }) {
   const cancelRef = React.useRef();
 
@@ -41,7 +42,12 @@ function CustomeAlertDailog({
             <Button variant={variant} ref={cancelRef} onClick={onClose}>
               {cancelText}
             </Button>
-            <Button variant={variant} colorScheme="red" ml={3}>
+            <Button
+              onClick={onOkHandler}
+              variant={variant}
+              colorScheme="red"
+              ml={3}
+            >
               {okText}
             </Button>
           </AlertDialogFooter>
