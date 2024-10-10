@@ -54,6 +54,19 @@ const DashboardProducts = () => {
     })
     
   }
+
+  const onChangePriceHandler = value =>{
+    setProductToEdit({
+      ...productToEdit,
+      price:+value
+    })
+  }
+  const onChangeStockHandler = value =>{
+    setProductToEdit({
+      ...productToEdit,
+      stock:+value
+    })
+  }
   
 
   useEffect(() => {
@@ -180,10 +193,9 @@ const DashboardProducts = () => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel mt={3}>Title</FormLabel>
+          <FormLabel mt={3}>Description</FormLabel>
           <Textarea
-          size='sm'
-          
+            size="sm"
             placeholder="Product Description"
             value={productToEdit?.description}
             onChange={onChangeHandler}
@@ -195,7 +207,7 @@ const DashboardProducts = () => {
           <NumberInput
             name="price"
             defaultValue={productToEdit?.price}
-            onChange={(e) => console.log(e)}
+            onChange={onChangePriceHandler}
             precision={2}
             step={0.2}
           >
@@ -208,7 +220,11 @@ const DashboardProducts = () => {
         </FormControl>
         <FormControl>
           <FormLabel mt={3}>Count in Stock</FormLabel>
-          <NumberInput defaultValue={1}>
+          <NumberInput
+            name="stock"
+            onChange={onChangeStockHandler}
+            defaultValue={productToEdit?.stock}
+          >
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -218,7 +234,7 @@ const DashboardProducts = () => {
         </FormControl>
         <FormControl>
           <FormLabel mt={3}>Product Image</FormLabel>
-          <Select type="file"></Select>
+          <Input type="file"></Input>
         </FormControl>
       </CustomModal>
     </>
