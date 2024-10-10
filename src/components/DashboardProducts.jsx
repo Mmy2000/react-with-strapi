@@ -20,7 +20,8 @@ import {
   NumberIncrementStepper,
   NumberInputStepper,
   Select,
-  Textarea
+  Textarea,
+  Box
   
 } from "@chakra-ui/react";
 
@@ -40,11 +41,11 @@ import CustomModal from "../shared/Modal";
 const DashboardProducts = () => {
   const [productId, setProductId] = useState(null);
   const [productToEdit, setProductToEdit] = useState(null);
+  const [image, setImage] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
   const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
-  console.log(productToEdit);
 
   const onChangeHandler = e => {
     const {name,value} = e.target
@@ -66,6 +67,18 @@ const DashboardProducts = () => {
       ...productToEdit,
       stock:+value
     })
+  }
+
+  const onChangeImageHandler = (e) =>{
+    setImage(e.target.files[0]);
+
+  }
+
+  const onSubmitHandler = e=>{
+    console.log(productToEdit);
+    console.log(image);
+    
+    
   }
   
 
@@ -182,6 +195,7 @@ const DashboardProducts = () => {
         title={`Update Product`}
         isOpen={isModalOpen}
         onClose={onModalClose}
+        onOkClick={onSubmitHandler}
       >
         <FormControl>
           <FormLabel>Title</FormLabel>
@@ -234,7 +248,14 @@ const DashboardProducts = () => {
         </FormControl>
         <FormControl>
           <FormLabel mt={3}>Product Image</FormLabel>
-          <Input type="file"></Input>
+          <Input
+            id="productImage"
+            h={"full"}
+            p={2}
+            accept="image/png,image/jpeg,image/gif"
+            type="file"
+            onChange={onChangeImageHandler}
+          ></Input>
         </FormControl>
       </CustomModal>
     </>

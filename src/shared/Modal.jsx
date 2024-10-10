@@ -18,6 +18,7 @@ const CustomModal = ({
   cancelTxt = "cancel",
   okTxt = "Update",
   children,
+  onOkClick,
 }) => {
   return (
     <>
@@ -36,7 +37,9 @@ const CustomModal = ({
             <Button colorScheme="red" mr={3} onClick={onClose}>
               {cancelTxt}
             </Button>
-            <Button colorScheme="blue">{okTxt}</Button>
+            <Button colorScheme="blue" onClick={onOkClick}>
+              {okTxt}
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
