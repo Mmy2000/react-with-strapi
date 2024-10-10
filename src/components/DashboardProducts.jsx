@@ -18,7 +18,9 @@ import {
   NumberInputField,
   NumberDecrementStepper,
   NumberIncrementStepper,
-  NumberInputStepper
+  NumberInputStepper,
+  Select,
+  Textarea
   
 } from "@chakra-ui/react";
 
@@ -37,11 +39,21 @@ import CustomModal from "../shared/Modal";
 
 const DashboardProducts = () => {
   const [productId, setProductId] = useState(null);
+  const [productToEdit, setProductToEdit] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
   const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
-  console.log(productId);
+  console.log(productToEdit);
+
+  const onChangeHandler = e => {
+    const {name,value} = e.target
+    setProductToEdit({
+      ...productToEdit,
+      [name]:value
+    })
+    
+  }
   
 
   useEffect(() => {
@@ -104,7 +116,10 @@ const DashboardProducts = () => {
 
                   <Button
                     mr={3}
-                    onClick={() => onModalOpen()}
+                    onClick={() => {
+                      setProductToEdit(product.attributes);
+                      onModalOpen();
+                    }}
                     colorScheme="blue"
                     variant={"solid"}
                   >
@@ -137,6 +152,7 @@ const DashboardProducts = () => {
           </Tfoot>
         </Table>
       </TableContainer>
+
       <CustomeAlertDailog
         onOkHandler={() => destroyProduct(productId)}
         isLoading={isDestroying}
@@ -156,17 +172,53 @@ const DashboardProducts = () => {
       >
         <FormControl>
           <FormLabel>Title</FormLabel>
-          <Input placeholder="Product Title" />
+          <Input
+            placeholder="Product Title"
+            value={productToEdit?.title}
+            onChange={onChangeHandler}
+            name="title"
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel mt={3}>Title</FormLabel>
+          <Textarea
+          size='sm'
+          
+            placeholder="Product Description"
+            value={productToEdit?.description}
+            onChange={onChangeHandler}
+            name="description"
+          />
         </FormControl>
         <FormControl>
           <FormLabel mt={3}>Price</FormLabel>
-          <NumberInput defaultValue={15} precision={2} step={0.2}>
+          <NumberInput
+            name="price"
+            defaultValue={productToEdit?.price}
+            onChange={(e) => console.log(e)}
+            precision={2}
+            step={0.2}
+          >
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
               <NumberDecrementStepper />
             </NumberInputStepper>
           </NumberInput>
+        </FormControl>
+        <FormControl>
+          <FormLabel mt={3}>Count in Stock</FormLabel>
+          <NumberInput defaultValue={1}>
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <FormControl>
+          <FormLabel mt={3}>Product Image</FormLabel>
+          <Select type="file"></Select>
         </FormControl>
       </CustomModal>
     </>
