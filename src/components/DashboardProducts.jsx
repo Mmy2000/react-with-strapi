@@ -11,7 +11,17 @@ import {
   Td,
   Button,
   useDisclosure,
+  FormControl,
+  FormLabel,
+  Input,
+  NumberInput,
+  NumberInputField,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInputStepper
+  
 } from "@chakra-ui/react";
+
 import DashboardSkeleton from "./DashboardSceleton";
 import { useDeleteDashboardProductMutation, useGetDashboardDataQuery } from "../app/services/apiSlice";
 import { Link } from "react-router-dom";
@@ -21,12 +31,14 @@ import { FiEdit2 } from "react-icons/fi";
 import { formatPrice } from "../utils/functions";
 import CustomeAlertDailog from "../shared/AlertDailog";
 import { useEffect, useState } from "react";
+import CustomModal from "../shared/Modal";
 
 
 
 const DashboardProducts = () => {
   const [productId, setProductId] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
   const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
   console.log(productId);
@@ -92,18 +104,16 @@ const DashboardProducts = () => {
 
                   <Button
                     mr={3}
-                    onClick={() =>
-                      console.log(`update ${product.attributes.title}`)
-                    }
+                    onClick={() => onModalOpen()}
                     colorScheme="blue"
                     variant={"solid"}
                   >
                     <FiEdit2 />
                   </Button>
                   <Button
-                    onClick={ ()=> {
-                      setProductId(product.id)
-                      onOpen()
+                    onClick={() => {
+                      setProductId(product.id);
+                      onOpen();
                     }}
                     colorScheme="red"
                     variant={"solid"}
@@ -127,7 +137,38 @@ const DashboardProducts = () => {
           </Tfoot>
         </Table>
       </TableContainer>
-      <CustomeAlertDailog onOkHandler={() => destroyProduct(productId)} isLoading={isDestroying} isOpen={isOpen}  onOpen={onOpen} onClose={onClose} title={'Are you sure'} description={'Do you really wont to destroy this product? this action cannot be undone.'} okText="Destroy"/>
+      <CustomeAlertDailog
+        onOkHandler={() => destroyProduct(productId)}
+        isLoading={isDestroying}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        title={"Are you sure"}
+        description={
+          "Do you really wont to destroy this product? this action cannot be undone."
+        }
+        okText="Destroy"
+      />
+      <CustomModal
+        title={`Update Product`}
+        isOpen={isModalOpen}
+        onClose={onModalClose}
+      >
+        <FormControl>
+          <FormLabel>Title</FormLabel>
+          <Input placeholder="Product Title" />
+        </FormControl>
+        <FormControl>
+          <FormLabel mt={3}>Price</FormLabel>
+          <NumberInput defaultValue={15} precision={2} step={0.2}>
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+      </CustomModal>
     </>
   );
 };
