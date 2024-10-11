@@ -35,13 +35,14 @@ import { formatPrice } from "../utils/functions";
 import CustomeAlertDailog from "../shared/AlertDailog";
 import { useEffect, useState } from "react";
 import CustomModal from "../shared/Modal";
+import { title } from "framer-motion/client";
 
 
 
 const DashboardProducts = () => {
   const [productId, setProductId] = useState(null);
   const [productToEdit, setProductToEdit] = useState(null);
-  const [image, setImage] = useState(null);
+  const [thumbnail, setImage] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
@@ -74,10 +75,20 @@ const DashboardProducts = () => {
 
   }
 
-  const onSubmitHandler = e=>{
+  const onSubmitHandler = ()=>{
     console.log(productToEdit);
-    console.log(image);
     
+    const formData = new FormData()
+    formData.append(
+      "data",
+      JSON.stringify({
+        title: productToEdit.title,
+        description: productToEdit.description,
+        price: productToEdit.price,
+        stock: productToEdit.stock,
+      })
+    );
+      formData.append("files.thumbnail",thumbnail);
     
   }
   
