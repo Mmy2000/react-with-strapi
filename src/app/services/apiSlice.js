@@ -248,6 +248,39 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Products"],
     }),
+    createDashboardCategory: build.mutation({
+      query: ({ body }) => ({
+        url: `/api/categories/`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${CookieService.get("jwt")}`,
+        },
+        body,
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Success notification
+          toast({
+            title: "Category Created.",
+            description: "The category was successfully created.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } catch (error) {
+          // Error notification
+          toast({
+            title: "Creation Failed.",
+            description: "There was an issue creating the category.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      },
+      invalidatesTags: ["Products"],
+    }),
   }),
 });
 
@@ -259,4 +292,5 @@ export const {
   useGetDashboardCategoryDataQuery,
   useDeleteDashboardCategoryMutation,
   useUpdateDashboardCategoryMutation,
+  useCreateDashboardCategoryMutation,
 } = apiSlice;

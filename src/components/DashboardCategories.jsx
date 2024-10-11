@@ -28,6 +28,7 @@ import {
 import { BsTrash } from "react-icons/bs";
 import { FiEdit2 } from "react-icons/fi";
 import {
+  useCreateDashboardCategoryMutation,
   useDeleteDashboardCategoryMutation,
   useGetDashboardCategoryDataQuery,
   useUpdateDashboardCategoryMutation,
@@ -39,6 +40,9 @@ import { body, title } from "framer-motion/client";
 
 const DashboardCategories = () => {
   const [categoryToEdit, setCategoryToEdit] = useState(null);
+  const [categoryToAdd, setCategoryToAdd] = useState({
+    title: "",
+  });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
@@ -59,6 +63,9 @@ const DashboardCategories = () => {
 
   const [updateCategory, { isLoading: isUpdating, isSuccess:isUpadeSuccess }] =
     useUpdateDashboardCategoryMutation();
+
+  const [addCategory, { isLoading: isAdding, isSuccess:isAddSuccess }] =
+    useCreateDashboardCategoryMutation();
     
   
   const onChangeHandler = (e) => {
@@ -70,16 +77,25 @@ const DashboardCategories = () => {
   };
 
   const onAddChangeHandler = (e) =>{
-    console.log(e.target.value);
+    const {name,value} = e.target
+    setCategoryToAdd({
+      ...categoryToEdit,
+      [name]:value
+    })
     
   }
 
   const onSubmitHandler = ()=>{
     const formData = new FormData()
     formData.append('data', JSON.stringify({
-      title:categoryToEdit?.title
+      title:categoryToEdit?.title || categoryToAdd?.title
     }));
-    updateCategory({id:categorytId,body:formData})
+    if (categorytId) {
+      updateCategory({ id: categorytId, body: formData });
+    } else {
+      addCategory({body:formData})
+    }
+    
   }
 
   useEffect(() => {
@@ -91,7 +107,13 @@ const DashboardCategories = () => {
       setCategoryId(null);
       onModalClose();
     }
-  }, [isSuccess,isUpadeSuccess]);
+    if (isAddSuccess) {
+      setCategoryToAdd({
+        title:''
+      })
+      onAddModalClose();
+    }
+  }, [isSuccess,isUpadeSuccess,isAddSuccess]);
 
   if (isLoading) {
     return <DashboardSkeleton />;
@@ -198,8 +220,8 @@ const DashboardCategories = () => {
           isOpen={isAddModalOpen}
           onClose={onAddModalClose}
           okTxt={"Create"}
-          // onOkClick={onSubmitHandler}
-          // isLoading={isUpdating}
+          onOkClick={onSubmitHandler}
+          isLoading={isAdding}
         >
           <FormControl>
             <FormLabel>Title</FormLabel>
