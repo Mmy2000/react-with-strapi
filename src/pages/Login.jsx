@@ -14,20 +14,20 @@ import {
   useColorModeValue,
   InputGroup,
   InputRightElement,
-  FormHelperText
+  FormHelperText,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLogin, userLogin } from "../app/features/loginSlice";
 import CookieService from "./CookieService";
-import { Navigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export default function Login() {
-  const token = CookieService.get('jwt')
-  const dispatch = useDispatch()
-  const {loading , data , error} = useSelector(selectLogin)
+  const token = CookieService.get("jwt");
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigate
+  const { loading, data, error } = useSelector(selectLogin);
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [user, setUser] = useState({
@@ -36,38 +36,36 @@ export default function Login() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const onChangeHandler = e =>{
-    const {name,value} = e.target
-    setUser({...user , [name]:value})
-  }
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
 
-  const submitHandler = e =>{
-    e.preventDefault()
+  const submitHandler = (e) => {
+    e.preventDefault();
     if (!user.identifier) {
-      setIsEmail(true)
+      setIsEmail(true);
       if (!user.password) {
-        setIsPassword(true)
+        setIsPassword(true);
       }
       return;
     }
-    if (!user.identifier) {
-      setIsEmail(true)
-      return
-    }
     if (!user.password) {
-      setIsPassword(true)
-      return
+      setIsPassword(true);
+      return;
     }
-    setIsEmail(false)
-    setIsPassword(false)
-    dispatch(userLogin(user))
-    console.log(user);
-    if (token) {
-      <Navigate to={'/'}/>
-    }
-    
-    
-  }
+    setIsEmail(false);
+    setIsPassword(false);
+
+    // Dispatch the login action
+    dispatch(userLogin(user)).then((result) => {
+      if (result.meta.requestStatus === "fulfilled") {
+        // Navigate to home after successful login
+        navigate("/");
+      }
+    });
+  };
+
   return (
     <Flex
       minH={"100vh"}
@@ -115,7 +113,6 @@ export default function Login() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                 />
-
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
@@ -143,7 +140,6 @@ export default function Login() {
                 <Text color={"blue.400"}>Forgot password?</Text>
               </Stack>
               <Button
-              
                 bg={isEmail || isPassword ? "red.500" : "blue.400"}
                 color={"white"}
                 _hover={{
