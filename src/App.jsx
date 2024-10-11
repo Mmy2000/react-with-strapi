@@ -18,6 +18,7 @@ import CookieService from './pages/CookieService'
 import AdminDashboard from './pages/dashboard'
 import LayoutDashboard from './pages/dashboard/LayoutDashboard'
 import DashboardProductsTable from './pages/dashboard/DashboardProductsTable'
+import DashboardCategoryTable from './pages/dashboard/DashboardCategoryTable'
 
 const token = CookieService.get('jwt')
 let router = createBrowserRouter([
@@ -88,7 +89,7 @@ let router = createBrowserRouter([
         path: "products",
       },
       {
-        element: <h2>categories</h2>,
+        element: <DashboardCategoryTable/>,
         path: "categories",
       },
       {

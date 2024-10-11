@@ -13,11 +13,31 @@ export const apiSlice = createApi({
     baseUrl: import.meta.env.VITE_SERVER_URL,
   }),
   endpoints: (build) => ({
+    // for Products
     getDashboardData: build.query({
       query: (arg) => {
         const { page } = arg;
         return {
           url: `/api/products?populate=thumbnail,categories&pagination[page]=${page}&pagination[pageSize]=7`,
+        };
+      },
+      providesTags: (result, error, arg) =>
+        result
+          ? [
+              ...result.data.map(({ id }) => ({
+                type: "Products",
+                id,
+              })),
+              "Products",
+            ]
+          : ["Products"],
+    }),
+
+    // for Categories
+    getDashboardCategoryData: build.query({
+      query: () => {
+        return {
+          url: `/api/categories`,
         };
       },
       providesTags: (result, error, arg) =>
@@ -155,4 +175,5 @@ export const {
   useDeleteDashboardProductMutation,
   useUpdateDashboardProductMutation,
   useCreateDashboardProductMutation,
+  useGetDashboardCategoryDataQuery,
 } = apiSlice;
