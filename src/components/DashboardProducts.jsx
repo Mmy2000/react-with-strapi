@@ -22,11 +22,16 @@ import {
   Select,
   Textarea,
   Box,
-  Flex,  
+  Flex,
 } from "@chakra-ui/react";
 
 import DashboardSkeleton from "./DashboardSceleton";
-import { useCreateDashboardProductMutation, useDeleteDashboardProductMutation, useGetDashboardDataQuery, useUpdateDashboardProductMutation } from "../app/services/apiSlice";
+import {
+  useCreateDashboardProductMutation,
+  useDeleteDashboardProductMutation,
+  useGetDashboardDataQuery,
+  useUpdateDashboardProductMutation,
+} from "../app/services/apiSlice";
 import { Link } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
@@ -36,8 +41,6 @@ import CustomeAlertDailog from "../shared/AlertDailog";
 import { useEffect, useState } from "react";
 import CustomModal from "../shared/Modal";
 import { title } from "framer-motion/client";
-
-
 
 const DashboardProducts = () => {
   const [productId, setProductId] = useState(null);
@@ -50,42 +53,50 @@ const DashboardProducts = () => {
     stock: 0,
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure();
-  const { isOpen:isAddModalOpen, onOpen:onAddModalOpen, onClose:onAddModalClose } = useDisclosure();
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isAddModalOpen,
+    onOpen: onAddModalOpen,
+    onClose: onAddModalClose,
+  } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
-  const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
-  const [updateProduct , {isLoading:isUpdating , isSuccess:isUpdateSuccess}] = useUpdateDashboardProductMutation()
+  const [destroyProduct, { isLoading: isDestroying, isSuccess }] =
+    useDeleteDashboardProductMutation();
+  const [updateProduct, { isLoading: isUpdating, isSuccess: isUpdateSuccess }] =
+    useUpdateDashboardProductMutation();
   const [createProduct, { isLoading: isCreating, isSuccess: isCreateSuccess }] =
     useCreateDashboardProductMutation();
 
   // Update
-  const onChangeHandler = e => {
-    const {name,value} = e.target
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
     setProductToEdit({
       ...productToEdit,
-      [name]:value
-    })
-    
-  }
+      [name]: value,
+    });
+  };
 
-  const onChangePriceHandler = value =>{
+  const onChangePriceHandler = (value) => {
     setProductToEdit({
       ...productToEdit,
-      price:+value
-    })
-  }
-  const onChangeStockHandler = value =>{
+      price: +value,
+    });
+  };
+  const onChangeStockHandler = (value) => {
     setProductToEdit({
       ...productToEdit,
-      stock:+value
-    })
-  }
+      stock: +value,
+    });
+  };
 
   // Add & Update
-  const onChangeImageHandler = (e) =>{
+  const onChangeImageHandler = (e) => {
     setImage(e.target.files[0]);
-
-  }
+  };
 
   // Add New Product
   const onAddChangeHandler = (e) => {
@@ -111,39 +122,36 @@ const DashboardProducts = () => {
   };
 
   // Handle Add & Update
- const onSubmitHandler = () => {
-   const formData = new FormData();
-   formData.append(
-     "data",
-     JSON.stringify({
-       title: productToEdit?.title || productToAdd?.title,
-       description: productToEdit?.description || productToAdd?.description,
-       price: productToEdit?.price || productToAdd?.price,
-       stock: productToEdit?.stock || productToAdd?.stock,
-     })
-   );
-   formData.append("files.thumbnail", thumbnail);
+  const onSubmitHandler = () => {
+    const formData = new FormData();
+    formData.append(
+      "data",
+      JSON.stringify({
+        title: productToEdit?.title || productToAdd?.title,
+        description: productToEdit?.description || productToAdd?.description,
+        price: productToEdit?.price || productToAdd?.price,
+        stock: productToEdit?.stock || productToAdd?.stock,
+      })
+    );
+    formData.append("files.thumbnail", thumbnail);
 
-   if (productId) {
-     // Update existing product
-     updateProduct({ id: productId, body: formData });
-     
-   } else {
-     // Create new product
-     createProduct({ body: formData });
-     
-   }
- };
-  
+    if (productId) {
+      // Update existing product
+      updateProduct({ id: productId, body: formData });
+    } else {
+      // Create new product
+      createProduct({ body: formData });
+    }
+  };
 
   useEffect(() => {
     if (isSuccess) {
-      setProductId(null)
-      onClose()
+      setProductId(null);
+      onClose();
     }
     if (isUpdateSuccess) {
-      setProductId(null)
-      onModalClose()
+      setProductId(null);
+      onModalClose();
     }
     if (isCreateSuccess) {
       setProductToAdd({
@@ -154,7 +162,7 @@ const DashboardProducts = () => {
       });
       onAddModalClose();
     }
-  }, [isSuccess,isUpdateSuccess,isCreateSuccess]);
+  }, [isSuccess, isUpdateSuccess, isCreateSuccess]);
 
   if (isLoading) {
     return <DashboardSkeleton />;

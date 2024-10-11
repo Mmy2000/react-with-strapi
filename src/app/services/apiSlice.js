@@ -124,7 +124,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["Products"],
     }),
 
-    // UPDATE
+    // UPDATE Product
     updateDashboardProduct: build.mutation({
       query: ({ id, body }) => ({
         url: `/api/products/${id}`,
@@ -160,6 +160,51 @@ export const apiSlice = createApi({
           toast({
             title: "Update Failed.",
             description: "There was an issue updating the product.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      },
+      invalidatesTags: ["Products"],
+    }),
+
+    // UPDATE Category
+    updateDashboardCategory: build.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/categories/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${CookieService.get("jwt")}`,
+        },
+        body,
+      }),
+      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData(
+            "getDashboardCategoryData",
+            id,
+            (draft) => {
+              Object.assign(draft, patch);
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+          // Success notification
+          toast({
+            title: "Category Updated.",
+            description: "The Category was successfully updated.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } catch (error) {
+          patchResult.undo();
+          // Error notification
+          toast({
+            title: "Update Failed.",
+            description: "There was an issue updating the category.",
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -213,4 +258,5 @@ export const {
   useCreateDashboardProductMutation,
   useGetDashboardCategoryDataQuery,
   useDeleteDashboardCategoryMutation,
+  useUpdateDashboardCategoryMutation,
 } = apiSlice;
