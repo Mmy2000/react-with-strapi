@@ -54,8 +54,6 @@ const DashboardCategories = () => {
     useUpdateDashboardCategoryMutation();
     
   
-  console.log(categoryToEdit);
-
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setCategoryToEdit({
@@ -77,7 +75,11 @@ const DashboardCategories = () => {
       setCategoryId(null);
       onClose();
     }
-  }, [isSuccess]);
+    if (isUpadeSuccess) {
+      setCategoryId(null);
+      onModalClose();
+    }
+  }, [isSuccess,isUpadeSuccess]);
 
   if (isLoading) {
     return <DashboardSkeleton />;
