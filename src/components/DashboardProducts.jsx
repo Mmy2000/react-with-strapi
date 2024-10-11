@@ -58,7 +58,7 @@ const DashboardProducts = () => {
   const [createProduct, { isLoading: isCreating, isSuccess: isCreateSuccess }] =
     useCreateDashboardProductMutation();
 
-
+  // Update
   const onChangeHandler = e => {
     const {name,value} = e.target
     setProductToEdit({
@@ -81,11 +81,13 @@ const DashboardProducts = () => {
     })
   }
 
+  // Add & Update
   const onChangeImageHandler = (e) =>{
     setImage(e.target.files[0]);
 
   }
 
+  // Add New Product
   const onAddChangeHandler = (e) => {
     const { name, value } = e.target;
     setProductToAdd({
@@ -108,6 +110,7 @@ const DashboardProducts = () => {
     });
   };
 
+  // Handle Add & Update
  const onSubmitHandler = () => {
    const formData = new FormData();
    formData.append(
