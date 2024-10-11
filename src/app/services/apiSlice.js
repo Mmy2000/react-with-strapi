@@ -52,7 +52,7 @@ export const apiSlice = createApi({
           : ["Products"],
     }),
 
-    // DELETE
+    // DELETE for product
     deleteDashboardProduct: build.mutation({
       query(id) {
         return {
@@ -79,6 +79,42 @@ export const apiSlice = createApi({
           toast({
             title: "Delete Failed.",
             description: "There was an issue deleting the product.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      },
+      invalidatesTags: ["Products"],
+    }),
+
+    // Delete Category
+    deleteDashboardCategory: build.mutation({
+      query(id) {
+        return {
+          url: `/api/categories/${id}`,
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${CookieService.get("jwt")}`,
+          },
+        };
+      },
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Success notification
+          toast({
+            title: "Category Deleted.",
+            description: "The Category was successfully deleted.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } catch (error) {
+          // Error notification
+          toast({
+            title: "Delete Failed.",
+            description: "There was an issue deleting the Category.",
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -176,4 +212,5 @@ export const {
   useUpdateDashboardProductMutation,
   useCreateDashboardProductMutation,
   useGetDashboardCategoryDataQuery,
+  useDeleteDashboardCategoryMutation,
 } = apiSlice;
