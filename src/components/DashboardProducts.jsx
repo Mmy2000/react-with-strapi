@@ -27,7 +27,7 @@ import {
 } from "@chakra-ui/react";
 
 import DashboardSkeleton from "./DashboardSceleton";
-import { useDeleteDashboardProductMutation, useGetDashboardDataQuery, useUpdateDashboardProductMutation } from "../app/services/apiSlice";
+import { useCreateDashboardProductMutation, useDeleteDashboardProductMutation, useGetDashboardDataQuery, useUpdateDashboardProductMutation } from "../app/services/apiSlice";
 import { Link } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
@@ -39,17 +39,25 @@ import CustomModal from "../shared/Modal";
 import { title } from "framer-motion/client";
 
 
-
 const DashboardProducts = () => {
   const [productId, setProductId] = useState(null);
   const [productToEdit, setProductToEdit] = useState(null);
   const [thumbnail, setImage] = useState(null);
+  const [productToAdd, setProductToAdd] = useState({
+    title: "",
+    description: "",
+    price: 0,
+    stock: 0,
+  });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure();
   const { isOpen:isAddModalOpen, onOpen:onAddModalOpen, onClose:onAddModalClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
   const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
   const [updateProduct , {isLoading:isUpdating , isSuccess:isUpdateSuccess}] = useUpdateDashboardProductMutation()
+  const [createProduct, { isLoading: isCreating, isSuccess: isCreateSuccess }] =
+    useCreateDashboardProductMutation();
+
 
   const onChangeHandler = e => {
     const {name,value} = e.target
@@ -78,23 +86,49 @@ const DashboardProducts = () => {
 
   }
 
-  const onSubmitHandler = ()=>{
-    console.log(productToEdit);
-    
-    const formData = new FormData()
-    formData.append(
-      "data",
-      JSON.stringify({
-        title: productToEdit.title,
-        description: productToEdit.description,
-        price: productToEdit.price,
-        stock: productToEdit.stock,
-      })
-    );
-      formData.append("files.thumbnail",thumbnail);
-      updateProduct({id:productId,body:formData})
-    
-  }
+  const onAddChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setProductToAdd({
+      ...productToAdd,
+      [name]: value,
+    });
+  };
+
+  const onAddPriceHandler = (value) => {
+    setProductToAdd({
+      ...productToAdd,
+      price: +value,
+    });
+  };
+
+  const onAddStockHandler = (value) => {
+    setProductToAdd({
+      ...productToAdd,
+      stock: +value,
+    });
+  };
+
+ const onSubmitHandler = () => {
+   const formData = new FormData();
+   formData.append(
+     "data",
+     JSON.stringify({
+       title: productToEdit?.title || productToAdd?.title,
+       description: productToEdit?.description || productToAdd?.description,
+       price: productToEdit?.price || productToAdd?.price,
+       stock: productToEdit?.stock || productToAdd?.stock,
+     })
+   );
+   formData.append("files.thumbnail", thumbnail);
+
+   if (productId) {
+     // Update existing product
+     updateProduct({ id: productId, body: formData });
+   } else {
+     // Create new product
+     createProduct({ body: formData });
+   }
+ };
   
 
   useEffect(() => {
@@ -106,7 +140,16 @@ const DashboardProducts = () => {
       setProductId(null)
       onModalClose()
     }
-  }, [isSuccess,isUpdateSuccess]);
+    if (isCreateSuccess) {
+      setProductToAdd({
+        title: "",
+        description: "",
+        price: 0,
+        stock: 0,
+      });
+      onAddModalClose();
+    }
+  }, [isSuccess,isUpdateSuccess,isCreateSuccess]);
 
   if (isLoading) {
     return <DashboardSkeleton />;
@@ -302,11 +345,15 @@ const DashboardProducts = () => {
         isOpen={isAddModalOpen}
         onClose={onAddModalClose}
         okTxt="Create"
+        onOkClick={onSubmitHandler}
+        isLoading={isCreating}
       >
         <FormControl>
           <FormLabel>Title</FormLabel>
           <Input
             placeholder="Product Title"
+            value={productToAdd.title}
+            onChange={onAddChangeHandler}
             name="title"
           />
         </FormControl>
@@ -315,6 +362,8 @@ const DashboardProducts = () => {
           <Textarea
             size="sm"
             placeholder="Product Description"
+            value={productToAdd.description}
+            onChange={onAddChangeHandler}
             name="description"
           />
         </FormControl>
@@ -322,7 +371,8 @@ const DashboardProducts = () => {
           <FormLabel mt={3}>Price</FormLabel>
           <NumberInput
             name="price"
-            defaultValue={20}
+            value={productToAdd.price}
+            onChange={onAddPriceHandler}
             precision={2}
             step={0.2}
           >
@@ -337,7 +387,8 @@ const DashboardProducts = () => {
           <FormLabel mt={3}>Count in Stock</FormLabel>
           <NumberInput
             name="stock"
-            defaultValue={1}
+            value={productToAdd.stock}
+            onChange={onAddStockHandler}
           >
             <NumberInputField />
             <NumberInputStepper>
@@ -354,6 +405,7 @@ const DashboardProducts = () => {
             p={2}
             accept="image/png,image/jpeg,image/gif"
             type="file"
+            onChange={onChangeImageHandler}
           ></Input>
         </FormControl>
       </CustomModal>
