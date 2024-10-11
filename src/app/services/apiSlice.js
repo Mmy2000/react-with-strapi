@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import CookieService from "../../pages/CookieService";
+import { createStandaloneToast } from "@chakra-ui/react";
+
+const { toast } = createStandaloneToast();
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -10,7 +13,6 @@ export const apiSlice = createApi({
     baseUrl: import.meta.env.VITE_SERVER_URL,
   }),
   endpoints: (build) => ({
-    // get data
     getDashboardData: build.query({
       query: (arg) => {
         const { page } = arg;
@@ -29,6 +31,7 @@ export const apiSlice = createApi({
             ]
           : ["Products"],
     }),
+
     // DELETE
     deleteDashboardProduct: build.mutation({
       query(id) {
@@ -40,10 +43,32 @@ export const apiSlice = createApi({
           },
         };
       },
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Success notification
+          toast({
+            title: "Product Deleted.",
+            description: "The product was successfully deleted.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } catch (error) {
+          // Error notification
+          toast({
+            title: "Delete Failed.",
+            description: "There was an issue deleting the product.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      },
       invalidatesTags: ["Products"],
     }),
-    // UPDATE
 
+    // UPDATE
     updateDashboardProduct: build.mutation({
       query: ({ id, body }) => ({
         url: `/api/products/${id}`,
@@ -65,15 +90,32 @@ export const apiSlice = createApi({
         );
         try {
           await queryFulfilled;
-        } catch {
+          // Success notification
+          toast({
+            title: "Product Updated.",
+            description: "The product was successfully updated.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } catch (error) {
           patchResult.undo();
+          // Error notification
+          toast({
+            title: "Update Failed.",
+            description: "There was an issue updating the product.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
         }
       },
       invalidatesTags: ["Products"],
     }),
 
+    // ADD/CREATE
     createDashboardProduct: build.mutation({
-      query: ({  body }) => ({
+      query: ({ body }) => ({
         url: `/api/products/`,
         method: "POST",
         headers: {
@@ -81,12 +123,36 @@ export const apiSlice = createApi({
         },
         body,
       }),
-      
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Success notification
+          toast({
+            title: "Product Created.",
+            description: "The product was successfully created.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } catch (error) {
+          // Error notification
+          toast({
+            title: "Creation Failed.",
+            description: "There was an issue creating the product.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      },
       invalidatesTags: ["Products"],
     }),
-
   }),
 });
 
-export const { useGetDashboardDataQuery, useDeleteDashboardProductMutation,useUpdateDashboardProductMutation,useCreateDashboardProductMutation } =
-  apiSlice;
+export const {
+  useGetDashboardDataQuery,
+  useDeleteDashboardProductMutation,
+  useUpdateDashboardProductMutation,
+  useCreateDashboardProductMutation,
+} = apiSlice;

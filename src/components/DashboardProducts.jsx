@@ -22,7 +22,9 @@ import {
   Select,
   Textarea,
   Box,
-  Flex
+  Flex,
+  Toast,
+  useToast
   
 } from "@chakra-ui/react";
 
@@ -37,6 +39,7 @@ import CustomeAlertDailog from "../shared/AlertDailog";
 import { useEffect, useState } from "react";
 import CustomModal from "../shared/Modal";
 import { title } from "framer-motion/client";
+
 
 
 const DashboardProducts = () => {
@@ -127,9 +130,11 @@ const DashboardProducts = () => {
    if (productId) {
      // Update existing product
      updateProduct({ id: productId, body: formData });
+     
    } else {
      // Create new product
      createProduct({ body: formData });
+     
    }
  };
   
