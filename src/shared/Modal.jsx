@@ -19,6 +19,7 @@ const CustomModal = ({
   okTxt = "Update",
   children,
   onOkClick,
+  isLoading
 }) => {
   return (
     <>
@@ -37,7 +38,7 @@ const CustomModal = ({
             <Button colorScheme="red" mr={3} onClick={onClose}>
               {cancelTxt}
             </Button>
-            <Button colorScheme="blue" onClick={onOkClick}>
+            <Button colorScheme="blue" onClick={onOkClick} isLoading={isLoading}>
               {okTxt}
             </Button>
           </ModalFooter>

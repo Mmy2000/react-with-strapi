@@ -26,7 +26,7 @@ import {
 } from "@chakra-ui/react";
 
 import DashboardSkeleton from "./DashboardSceleton";
-import { useDeleteDashboardProductMutation, useGetDashboardDataQuery } from "../app/services/apiSlice";
+import { useDeleteDashboardProductMutation, useGetDashboardDataQuery, useUpdateDashboardProductMutation } from "../app/services/apiSlice";
 import { Link } from "react-router-dom";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
@@ -47,6 +47,7 @@ const DashboardProducts = () => {
   const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
   const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
+  const [updateProduct , {isLoading:isUpdating , isSuccess:isUpdateSuccess}] = useUpdateDashboardProductMutation()
 
   const onChangeHandler = e => {
     const {name,value} = e.target
@@ -89,6 +90,7 @@ const DashboardProducts = () => {
       })
     );
       formData.append("files.thumbnail",thumbnail);
+      updateProduct({id:productId,body:formData})
     
   }
   
@@ -98,7 +100,11 @@ const DashboardProducts = () => {
       setProductId(null)
       onClose()
     }
-  }, [isSuccess]);
+    if (isUpdateSuccess) {
+      setProductId(null)
+      onModalClose()
+    }
+  }, [isSuccess,isUpdateSuccess]);
 
   if (isLoading) {
     return <DashboardSkeleton />;
@@ -154,6 +160,7 @@ const DashboardProducts = () => {
                   <Button
                     mr={3}
                     onClick={() => {
+                      setProductId(product.id)
                       setProductToEdit(product.attributes);
                       onModalOpen();
                     }}
@@ -207,6 +214,7 @@ const DashboardProducts = () => {
         isOpen={isModalOpen}
         onClose={onModalClose}
         onOkClick={onSubmitHandler}
+        isLoading={isUpdating}
       >
         <FormControl>
           <FormLabel>Title</FormLabel>
