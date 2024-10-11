@@ -21,7 +21,8 @@ import {
   NumberInputStepper,
   Select,
   Textarea,
-  Box
+  Box,
+  Flex
   
 } from "@chakra-ui/react";
 
@@ -45,6 +46,7 @@ const DashboardProducts = () => {
   const [thumbnail, setImage] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure();
+  const { isOpen:isAddModalOpen, onOpen:onAddModalOpen, onClose:onAddModalClose } = useDisclosure();
   const { isLoading, data, error } = useGetDashboardDataQuery({ page: 1 });
   const [destroyProduct , {isLoading:isDestroying , isSuccess}] = useDeleteDashboardProductMutation()
   const [updateProduct , {isLoading:isUpdating , isSuccess:isUpdateSuccess}] = useUpdateDashboardProductMutation()
@@ -111,91 +113,109 @@ const DashboardProducts = () => {
   }
   return (
     <>
-      <TableContainer>
-        <Table variant="simple">
-          <TableCaption>Total Entries : {data?.data.length ?? 0}</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Title</Th>
-              <Th>Category</Th>
-              <Th>Thumbnail</Th>
-              <Th>Price</Th>
-              <Th>Stock</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data?.data?.map((product) => (
-              <Tr key={product.id}>
-                <Td>{product.id}</Td>
-                <Td>{product?.attributes.title}</Td>
-                <Td>
-                  {product?.attributes?.categories?.data[0]?.attributes?.title}
-                </Td>
-                <Td>
-                  <Image
-                    borderRadius="full"
-                    objectFit={"cover"}
-                    boxSize="40px"
-                    src={`${import.meta.env.VITE_SERVER_URL}${
-                      product?.attributes?.thumbnail?.data?.attributes?.formats
-                        ?.thumbnail?.url
-                    }`}
-                  />
-                </Td>
-                <Td>${formatPrice(product.attributes.price)}</Td>
-                <Td>{product.attributes.stock}</Td>
-                <Td>
-                  <Button
-                    as={Link}
-                    to={`/products/${product.id}`}
-                    colorScheme="purple"
-                    variant={"solid"}
-                    mr={3}
-                  >
-                    <AiOutlineEye size={17} />
-                  </Button>
-
-                  <Button
-                    mr={3}
-                    onClick={() => {
-                      setProductId(product.id)
-                      setProductToEdit(product.attributes);
-                      onModalOpen();
-                    }}
-                    colorScheme="blue"
-                    variant={"solid"}
-                  >
-                    <FiEdit2 />
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setProductId(product.id);
-                      onOpen();
-                    }}
-                    colorScheme="red"
-                    variant={"solid"}
-                  >
-                    <BsTrash size={17} />
-                  </Button>
-                </Td>
+      <Flex direction={"column"} my={6} mx={"auto"} maxW={"85%"}>
+        <Button
+          colorScheme="green"
+          w={"fit-content"}
+          ml={"auto"}
+          mb={2}
+          onClick={() => onAddModalOpen()}
+          variant={"solid"}
+          mr={3}
+        >
+          Add Product
+        </Button>
+        <TableContainer>
+          <Table variant="simple">
+            <TableCaption>
+              Total Entries : {data?.data.length ?? 0}
+            </TableCaption>
+            <Thead>
+              <Tr>
+                <Th>ID</Th>
+                <Th>Title</Th>
+                <Th>Category</Th>
+                <Th>Thumbnail</Th>
+                <Th>Price</Th>
+                <Th>Stock</Th>
+                <Th>Action</Th>
               </Tr>
-            ))}
-          </Tbody>
-          <Tfoot>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Title</Th>
-              <Th>Category</Th>
-              <Th>Thumbnail</Th>
-              <Th>Price</Th>
-              <Th>Stock</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Tfoot>
-        </Table>
-      </TableContainer>
+            </Thead>
+            <Tbody>
+              {data?.data?.map((product) => (
+                <Tr key={product.id}>
+                  <Td>{product.id}</Td>
+                  <Td>{product?.attributes.title}</Td>
+                  <Td>
+                    {
+                      product?.attributes?.categories?.data[0]?.attributes
+                        ?.title
+                    }
+                  </Td>
+                  <Td>
+                    <Image
+                      borderRadius="full"
+                      objectFit={"cover"}
+                      boxSize="40px"
+                      src={`${import.meta.env.VITE_SERVER_URL}${
+                        product?.attributes?.thumbnail?.data?.attributes
+                          ?.formats?.thumbnail?.url
+                      }`}
+                    />
+                  </Td>
+                  <Td>${formatPrice(product.attributes.price)}</Td>
+                  <Td>{product.attributes.stock}</Td>
+                  <Td>
+                    <Button
+                      as={Link}
+                      to={`/products/${product.id}`}
+                      colorScheme="purple"
+                      variant={"solid"}
+                      mr={3}
+                    >
+                      <AiOutlineEye size={17} />
+                    </Button>
+
+                    <Button
+                      mr={3}
+                      onClick={() => {
+                        setProductId(product.id);
+                        setProductToEdit(product.attributes);
+                        onModalOpen();
+                      }}
+                      colorScheme="blue"
+                      variant={"solid"}
+                    >
+                      <FiEdit2 />
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setProductId(product.id);
+                        onOpen();
+                      }}
+                      colorScheme="red"
+                      variant={"solid"}
+                    >
+                      <BsTrash size={17} />
+                    </Button>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+            <Tfoot>
+              <Tr>
+                <Th>ID</Th>
+                <Th>Title</Th>
+                <Th>Category</Th>
+                <Th>Thumbnail</Th>
+                <Th>Price</Th>
+                <Th>Stock</Th>
+                <Th>Action</Th>
+              </Tr>
+            </Tfoot>
+          </Table>
+        </TableContainer>
+      </Flex>
 
       <CustomeAlertDailog
         onOkHandler={() => destroyProduct(productId)}
@@ -274,6 +294,66 @@ const DashboardProducts = () => {
             accept="image/png,image/jpeg,image/gif"
             type="file"
             onChange={onChangeImageHandler}
+          ></Input>
+        </FormControl>
+      </CustomModal>
+      <CustomModal
+        title={`Add New Product`}
+        isOpen={isAddModalOpen}
+        onClose={onAddModalClose}
+        okTxt="Create"
+      >
+        <FormControl>
+          <FormLabel>Title</FormLabel>
+          <Input
+            placeholder="Product Title"
+            name="title"
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel mt={3}>Description</FormLabel>
+          <Textarea
+            size="sm"
+            placeholder="Product Description"
+            name="description"
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel mt={3}>Price</FormLabel>
+          <NumberInput
+            name="price"
+            defaultValue={20}
+            precision={2}
+            step={0.2}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <FormControl>
+          <FormLabel mt={3}>Count in Stock</FormLabel>
+          <NumberInput
+            name="stock"
+            defaultValue={1}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <FormControl>
+          <FormLabel mt={3}>Product Image</FormLabel>
+          <Input
+            id="productImage"
+            h={"full"}
+            p={2}
+            accept="image/png,image/jpeg,image/gif"
+            type="file"
           ></Input>
         </FormControl>
       </CustomModal>
