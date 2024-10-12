@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { BsWifiOff } from "react-icons/bs";
+import { BsWifiOff,BsWifi } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 
 const InternetConnectionProvider = ({ children }) => {
@@ -22,6 +22,7 @@ const InternetConnectionProvider = ({ children }) => {
     const handleOnline = () => {
       setIsOnline(true);
       close(); // Close the offline notification when back online
+      onlineToast()
     };
 
     window.addEventListener("offline", handleOffline);
@@ -45,6 +46,16 @@ const InternetConnectionProvider = ({ children }) => {
       duration: null,
       isClosable: true,
       icon: <BsWifiOff size={20} />,
+    });
+  }
+  function onlineToast() {
+    toastIdRef.current = toast({
+      title: "You're Online",
+      description: "Welcome, you internet connected successfully",
+      status: "success",
+      duration: null,
+      isClosable: true,
+      icon: <BsWifi size={20} />,
     });
   }
 
