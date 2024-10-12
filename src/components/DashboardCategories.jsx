@@ -36,9 +36,11 @@ import {
 import DashboardSkeleton from "./DashboardSceleton";
 import CustomeAlertDailog from "../shared/AlertDailog";
 import CustomModal from "../shared/Modal";
-import { body, title } from "framer-motion/client";
+import { useSelector } from "react-redux";
+import { selectNetwork } from "../app/features/networkSlice";
 
 const DashboardCategories = () => {
+  const { isOnline } = useSelector(selectNetwork);
   const [categoryToEdit, setCategoryToEdit] = useState(null);
   const [categoryToAdd, setCategoryToAdd] = useState({
     title: "",
@@ -115,7 +117,7 @@ const DashboardCategories = () => {
     }
   }, [isSuccess,isUpadeSuccess,isAddSuccess]);
 
-  if (isLoading) {
+  if (isLoading || !isOnline) {
     return <DashboardSkeleton />;
   }
 

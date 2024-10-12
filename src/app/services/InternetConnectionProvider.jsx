@@ -49,6 +49,7 @@ const InternetConnectionProvider = ({ children }) => {
       duration: null,
       isClosable: true,
       icon: <BsWifiOff size={20} />,
+      position: "bottom-right",
     });
   }
   function onlineToast() {
@@ -59,6 +60,7 @@ const InternetConnectionProvider = ({ children }) => {
       duration: 4000,
       isClosable: true,
       icon: <BsWifi size={20} />,
+      position: "bottom-right",
     });
   }
 

@@ -20,10 +20,11 @@ import ProductDetailSceleton from '../components/ProductDetailSceleton';
 import { formatPrice } from '../utils/functions';
 import { addToCart } from '../app/features/cartSlice';
 import { useDispatch } from 'react-redux';
-
-
+import { useSelector } from "react-redux";
+import { selectNetwork } from "../app/features/networkSlice";
 
 export default function Product() {
+   const { isOnline } = useSelector(selectNetwork);
   const textColor = useColorModeValue("gray.600", "gray.400");
    const dispatch = useDispatch();
     const { id } = useParams();
@@ -50,7 +51,7 @@ export default function Product() {
     useEffect(() => {
         document.title = `Product Store | product ${id} page`
     }, []);
-    if (isLoading) {
+    if (isLoading || !isOnline) {
         return (
           <Box
             direction="column"

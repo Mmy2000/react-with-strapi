@@ -4,9 +4,13 @@ import { Box , Grid } from '@chakra-ui/react'
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import Sceleton from '../components/Sceleton';
+import { useSelector } from "react-redux";
+import { selectNetwork } from "../app/features/networkSlice";
+
 
 export default function Products() {
   
+  const { isOnline } = useSelector(selectNetwork);
 
   const getProductList = async ()=>{
     const { data } = await axios.get(
@@ -20,7 +24,7 @@ export default function Products() {
   const {isLoading , data , error} = useQuery('products', () => getProductList())
   console.log(data?.data);
   
-  if (isLoading) {
+  if (isLoading || !isOnline) {
     return <Grid
       m={10}
       templateColumns={"repeat(auto-fill,minmax(300px,1fr))"}
