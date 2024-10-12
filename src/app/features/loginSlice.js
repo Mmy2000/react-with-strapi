@@ -48,14 +48,10 @@ const loginSlice = createSlice({
 
         toast({
           title: "Logged in successfully.",
-          description: ".",
           status: "success",
           duration: 9000,
           isClosable: true,
-        });
-        
-        window.location.reload()
-        
+        });        
         
       })
       .addCase(userLogin.rejected, (state, action) => {
