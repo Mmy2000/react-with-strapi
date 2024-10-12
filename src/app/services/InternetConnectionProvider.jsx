@@ -1,13 +1,16 @@
 import { useToast } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { BsWifiOff } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 
 const InternetConnectionProvider = ({ children }) => {
+  const dispatch = useDispatch();
   const toast = useToast();
   const toastIdRef = useRef();
   const [isOnline, setIsOnline] = useState(true);
 
   useEffect(() => {
+    
     setIsOnline(navigator.onLine);
 
     const handleOffline = () => {
