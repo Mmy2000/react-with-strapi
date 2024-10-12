@@ -79,8 +79,8 @@ export default function Navbar() {
 
         {/* Call to Action */}
         <div className="flex items-center justify-center ">
-          <Button
-            className="relative mr-4 flex items-center px-5 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-800 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50"
+          <div
+            className=" mr-4 flex items-center px-4 py-2 bg-gradient-to-r to-blue-200 from-blue-300 cursor-pointer text-white font-bold rounded-lg shadow-lg hover:to-blue-300 hover:from-blue-400 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50"
             onClick={onOpen}
           >
             <svg
@@ -100,7 +100,7 @@ export default function Navbar() {
             <span className=" px-2 py-1 bg-red-500 text-xs font-bold text-white rounded-full">
               {cartProducts.length}
             </span>
-          </Button>
+          </div>
 
           <div className="hidden md:block">
             {!token ? (
