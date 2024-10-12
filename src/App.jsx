@@ -112,15 +112,6 @@ let router = createBrowserRouter([
 const queryClient = new QueryClient();
 function App() {
 
-  window.addEventListener("offline", (e) => {
-    console.log("offline");
-  });
-
-  window.addEventListener("online", (e) => {
-    console.log("online");
-  });
-
-  
   return (
     <>
       <QueryClientProvider client={queryClient}>
