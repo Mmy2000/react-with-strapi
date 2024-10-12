@@ -19,6 +19,7 @@ import AdminDashboard from './pages/dashboard'
 import LayoutDashboard from './pages/dashboard/LayoutDashboard'
 import DashboardProductsTable from './pages/dashboard/DashboardProductsTable'
 import DashboardCategoryTable from './pages/dashboard/DashboardCategoryTable'
+import InternetConnectionProvider from './app/services/InternetConnectionProvider'
 
 let router = createBrowserRouter([
   {
@@ -114,9 +115,11 @@ function App() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router}></RouterProvider>
-      </QueryClientProvider>
+      <InternetConnectionProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router}></RouterProvider>
+        </QueryClientProvider>
+      </InternetConnectionProvider>
     </>
   );
 }
