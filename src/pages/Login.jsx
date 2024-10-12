@@ -24,9 +24,13 @@ import CookieService from "./CookieService";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export default function Login() {
-  const token = CookieService.get("jwt");
-  const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize navigate
+  const token = CookieService.get("jwt");
+  if (token) {
+    navigate("/");
+  }
+  const dispatch = useDispatch();
+
   const { loading, data, error } = useSelector(selectLogin);
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
