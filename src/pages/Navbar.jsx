@@ -79,12 +79,29 @@ export default function Navbar() {
 
         {/* Call to Action */}
         <div className="flex items-center justify-center ">
-          <Button className="mx-2" onClick={toggleColorMode}>
-            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}{" "}
+          <Button
+            className="relative mr-4 flex items-center px-5 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-800 transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50"
+            onClick={onOpen}
+          >
+            <svg
+              className="w-6 h-6 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 2m6.4-2v6m0 0h-4m4 0h4"
+              />
+            </svg>
+            <span className=" px-2 py-1 bg-red-500 text-xs font-bold text-white rounded-full">
+              {cartProducts.length}
+            </span>
           </Button>
-          <Button className="me-2" onClick={onOpen}>
-            Cart ({cartProducts.length})
-          </Button>
+
           <div className="hidden md:block">
             {!token ? (
               <NavLink
@@ -132,6 +149,9 @@ export default function Navbar() {
               </Menu>
             )}
           </div>
+          <Button className="ml-4" onClick={toggleColorMode}>
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}{" "}
+          </Button>
         </div>
       </div>
     </Box>
