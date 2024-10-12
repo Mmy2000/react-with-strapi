@@ -20,7 +20,6 @@ import LayoutDashboard from './pages/dashboard/LayoutDashboard'
 import DashboardProductsTable from './pages/dashboard/DashboardProductsTable'
 import DashboardCategoryTable from './pages/dashboard/DashboardCategoryTable'
 
-const token = CookieService.get('jwt')
 let router = createBrowserRouter([
   {
     path: "/",
@@ -112,6 +111,15 @@ let router = createBrowserRouter([
 
 const queryClient = new QueryClient();
 function App() {
+
+  window.addEventListener("offline", (e) => {
+    console.log("offline");
+  });
+
+  window.addEventListener("online", (e) => {
+    console.log("online");
+  });
+
   
   return (
     <>
