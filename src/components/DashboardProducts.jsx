@@ -41,8 +41,11 @@ import CustomeAlertDailog from "../shared/AlertDailog";
 import { useEffect, useState } from "react";
 import CustomModal from "../shared/Modal";
 import { title } from "framer-motion/client";
+import { useSelector } from "react-redux";
+import { selectNetwork } from "../app/features/networkSlice";
 
 const DashboardProducts = () => {
+  const { isOnline } = useSelector(selectNetwork);
   const [productId, setProductId] = useState(null);
   const [productToEdit, setProductToEdit] = useState(null);
   const [thumbnail, setImage] = useState(null);
@@ -164,7 +167,7 @@ const DashboardProducts = () => {
     }
   }, [isSuccess, isUpdateSuccess, isCreateSuccess]);
 
-  if (isLoading) {
+  if (isLoading || !isOnline) {
     return <DashboardSkeleton />;
   }
   return (
