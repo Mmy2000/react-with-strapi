@@ -27,7 +27,7 @@ export default function Login() {
   const navigate = useNavigate(); // Initialize navigate
   const token = CookieService.get("jwt");
   if (token) {
-    navigate("/");
+    navigate("/products");
   }
   const dispatch = useDispatch();
 
@@ -65,7 +65,7 @@ export default function Login() {
     dispatch(userLogin(user)).then((result) => {
       if (result.meta.requestStatus === "fulfilled") {
         // Navigate to home after successful login
-        navigate("/");
+        navigate("/products");
       }
     });
   };

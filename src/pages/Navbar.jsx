@@ -45,56 +45,25 @@ export default function Navbar() {
     >
       <div className=" mx-auto px-10 py-3 flex justify-between items-center">
         {/* Logo */}
-        <div className={`text-3xl font-bold`} style={{ color: textColor }}>
-          My App
-        </div>
+        <div className="flex justify-center items-center space-x-8">
+          <div className={`text-3xl font-bold`} style={{ color: textColor }}>
+            My App
+          </div>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-8">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive
-                ? `font-bold`
-                : `hover:text-blue-600 transition duration-300`
-            }
-            style={{ color: textColor }}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              isActive
-                ? `font-bold`
-                : `hover:text-blue-600 transition duration-300`
-            }
-            style={{ color: textColor }}
-          >
-            About
-          </NavLink>
-          <NavLink
-            to="/products"
-            className={({ isActive }) =>
-              isActive
-                ? `font-bold`
-                : `hover:text-blue-600 transition duration-300`
-            }
-            style={{ color: textColor }}
-          >
-            Products
-          </NavLink>
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              isActive
-                ? `font-bold`
-                : `hover:text-blue-600 transition duration-300`
-            }
-            style={{ color: textColor }}
-          >
-            Contact
-          </NavLink>
+          {/* Desktop Menu */}
+          <div className="hidden md:flex ">
+            <NavLink
+              to="/products"
+              className={({ isActive }) =>
+                isActive
+                  ? `font-bold`
+                  : `hover:text-blue-600 transition duration-300`
+              }
+              style={{ color: textColor }}
+            >
+              Products
+            </NavLink>
+          </div>
         </div>
 
         {/* Call to Action */}
