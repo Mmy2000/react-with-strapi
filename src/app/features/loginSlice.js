@@ -51,7 +51,9 @@ const loginSlice = createSlice({
           status: "success",
           duration: 9000,
           isClosable: true,
-        });        
+        });
+        
+        
         
       })
       .addCase(userLogin.rejected, (state, action) => {

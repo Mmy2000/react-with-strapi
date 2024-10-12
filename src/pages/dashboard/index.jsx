@@ -77,13 +77,13 @@ const AdminDashboard = () => {
       <Flex>
         <Button
           leftIcon={<FiArrowLeft />}
-          onClick={() => navigate("/")} // Navigate to home
+          onClick={() => navigate("/products")} // Navigate to home
           mb={6}
           bg="cyan.400"
           color="white"
           _hover={{ bg: "cyan.600" }}
         >
-          Go Home
+          Go to Website
         </Button>
         <Button ms={4} onClick={toggleColorMode} mb={6}>
           Toggle {useColorModeValue("Dark", "Light")} Mode

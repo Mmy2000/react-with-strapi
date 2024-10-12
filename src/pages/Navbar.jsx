@@ -51,13 +51,24 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Menu */}
-          <div className="flex ">
+          <div className="flex items-center space-x-8">
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive
+                  ? `font-bold`
+                  : `  bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 transition-all py-2 px-4 rounded-md`
+              }
+              style={{ color: textColor }}
+            >
+              Dashboard
+            </NavLink>
             <NavLink
               to="/products"
               className={({ isActive }) =>
                 isActive
                   ? `font-bold`
-                  : `hover:text-blue-600 transition duration-300`
+                  : `hover:text-blue-600 transition duration-300 `
               }
               style={{ color: textColor }}
             >
@@ -123,7 +134,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-
     </Box>
   );
 }
