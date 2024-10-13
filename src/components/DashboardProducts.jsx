@@ -216,10 +216,10 @@ const DashboardProducts = () => {
                       borderRadius="full"
                       objectFit={"cover"}
                       boxSize="40px"
-                      src={`${import.meta.env.VITE_SERVER_URL}${
+                      src={
                         product?.attributes?.thumbnail?.data?.attributes
                           ?.formats?.thumbnail?.url
-                      }`}
+                      }
                     />
                   </Td>
                   <Td>${formatPrice(product.attributes.price)}</Td>

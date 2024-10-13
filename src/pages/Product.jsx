@@ -88,9 +88,7 @@ export default function Product() {
             rounded="lg"
             w="100%"
             h={{ base: "auto", md: "450px" }}
-            src={`${import.meta.env.VITE_SERVER_URL}${
-              data?.data?.attributes?.thumbnail?.data?.attributes?.url
-            }`}
+            src={data?.data?.attributes?.thumbnail?.data?.attributes?.url}
             objectFit="cover"
             boxShadow="lg"
           />

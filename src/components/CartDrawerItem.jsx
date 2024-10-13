@@ -11,9 +11,7 @@ const CartDrawerItem = ({id,attributes:{thumbnail,title,price},quantity}) => {
     <>
       <Flex alignItems={"center"} mb={3} py={2}>
         <Image
-          src={`${import.meta.env.VITE_SERVER_URL}${
-            thumbnail.data.attributes.url
-          }`}
+          src={thumbnail.data.attributes.url}
           alt={title}
           w={"80px"}
           h={"80px"}
@@ -25,10 +23,18 @@ const CartDrawerItem = ({id,attributes:{thumbnail,title,price},quantity}) => {
         <Stack>
           <Flex>
             <Text fontSize={"sm"}>{title}</Text>
-            <Text fontSize={"sm"} ml={3}>Price : ${formatPrice(price)}</Text>
+            <Text fontSize={"sm"} ml={3}>
+              Price : ${formatPrice(price)}
+            </Text>
           </Flex>
           <Text fontSize={"sm"}>Quantity : {quantity}</Text>
-          <Button onClick={()=> dispatch(removeFromCart(id))}  variant="outline" colorScheme="red" size="sm" w="fit-content">
+          <Button
+            onClick={() => dispatch(removeFromCart(id))}
+            variant="outline"
+            colorScheme="red"
+            size="sm"
+            w="fit-content"
+          >
             Remove
           </Button>
         </Stack>

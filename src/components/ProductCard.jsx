@@ -33,9 +33,7 @@ export default function ProductCard({attributes,id}) {
       >
         <CardBody p={6}>
           <Image
-            src={`${import.meta.env.VITE_SERVER_URL}${
-              attributes?.thumbnail?.data?.attributes?.url
-            }`}
+            src={attributes?.thumbnail?.data?.attributes?.url}
             alt="Green double couch with wooden legs"
             boxSize="220px"
             borderRadius="full"
